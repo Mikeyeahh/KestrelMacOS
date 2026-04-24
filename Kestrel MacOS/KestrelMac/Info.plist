@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Kestrel</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.yourname.kestrel</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kestrel</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.yourname.osprey</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>osprey</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>com.yourname.kestrel.terminal</string>
+		<string>com.yourname.kestrel.dashboard</string>
+		<string>com.yourname.kestrel.files</string>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>osprey</string>
+	</array>
+</dict>
+</plist>
