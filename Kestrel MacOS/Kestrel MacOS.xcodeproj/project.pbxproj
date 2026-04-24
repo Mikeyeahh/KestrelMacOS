@@ -1,0 +1,611 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06090DCA53EC265FADAC88B9 /* MacPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A473DD6A8A755565913139 /* MacPaywallView.swift */; };
+		0D84CD0CFD1E155187E5FEBA /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 2FA7BA56880C65B82BDD7E64 /* RevenueCat */; };
+		17DA24D5608732C2CB67BAC9 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3F617CD12DE03C88555B98 /* TerminalView.swift */; };
+		18C342815A84BFA51A0EE10F /* KestrelColors+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CF303C20431C7195C91C3 /* KestrelColors+Mac.swift */; };
+		1985CB19F33D4665974B74E8 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = DE496F65C74BA52C97FB3DC0 /* SwiftTerm */; };
+		1B9AC6057BD4CD8061B32BE9 /* RevenueCatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13C0BF692B82991A40066F8 /* RevenueCatService.swift */; };
+		26E6AE2D38E52B6DBC8F1729 /* MacSFTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4BFDFC22FD90D49606F888 /* MacSFTPView.swift */; };
+		2775BBE32F8C2A2E008678FA /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBE12F8C2A2E008678FA /* AppTheme.swift */; };
+		2775BBE42F8C2A2E008678FA /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBE22F8C2A2E008678FA /* ThemeManager.swift */; };
+		2775BBEB2F8C3295008678FA /* Citadel in Frameworks */ = {isa = PBXBuildFile; productRef = 2775BBEA2F8C3295008678FA /* Citadel */; };
+		2775BBED2F8C34CE008678FA /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBEC2F8C34CE008678FA /* KeychainService.swift */; };
+		2775BBEF2F8C38BC008678FA /* MacEditServerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBEE2F8C38BC008678FA /* MacEditServerSheet.swift */; };
+		2B8262C3B4BFB89FFBC6487A /* MacSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */; };
+		335E1D41178934DE894008FF /* MacCommandLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF1A9F5C11BDAD7001D5BE /* MacCommandLibraryView.swift */; };
+		362DCBCBB193A0D549DC9AFD /* MacMenuCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0137CDF8E99C4ADAE29485 /* MacMenuCommands.swift */; };
+		37168FCE381D5FEEBEE75632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBA1C9CD4873FE40A415769 /* Assets.xcassets */; };
+		3C461F43671571422946961D /* KestrelFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF60EF62FC579DAD3FFB38E /* KestrelFonts.swift */; };
+		420EA9FC71CEF80F0C92C83F /* KestrelFonts+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814EF6A0EA78FADA4DF2510B /* KestrelFonts+Mac.swift */; };
+		4FE237E7A9AAB9D70FB0DA61 /* MacContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7201FFB56CC380D17BC4F0A4 /* MacContentView.swift */; };
+		581C2D174DE91197ECFFEFEE /* CloudSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478EE238AE851FF09E554FFF /* CloudSyncView.swift */; };
+		6280A5B35D76B2752D3263B5 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 14FC7C2CD0FC462FD42C5574 /* Supabase */; };
+		63E545C67DCF3E3EDB6EFE78 /* SFTPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F16AF698EECF315909DAA /* SFTPSession.swift */; };
+		7688F39485AF5EFDEDE064D5 /* MacTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B787D9590BF6FEE0F50C69F /* MacTerminalView.swift */; };
+		83C24333A6B08B967273AD32 /* WindowChromeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2C7AADCFBE8238DC55564 /* WindowChromeModifier.swift */; };
+		85A21575D463B7C287719026 /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455C9DBAADC864A603E4810 /* ServerListView.swift */; };
+		863A36FCEB357F2C0F3ABD51 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CB85E9B06AACE3929846C /* NotificationManager.swift */; };
+		874C15F468D520280D5BD47E /* SavedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */; };
+		88D0FF659A2B6B37585B13AA /* SSHSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696CB92D9A476E7FF1AB3075 /* SSHSessionManager.swift */; };
+		8AFEB282056A6B1A0B5696F7 /* MacDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2D1D3095FE0A9CB650195 /* MacDashboardView.swift */; };
+		9483CE72339C047EE32A2FC1 /* MacCloudSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2E07896AB02A24D7A6DF2 /* MacCloudSyncView.swift */; };
+		98B7C98FB63E35F0EEBEA427 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F890AC62EF44403C8BDEC /* DashboardView.swift */; };
+		99D3BCBE9260E76FF9F448D1 /* FileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21896642FCC5781B4956D33 /* FileManagerView.swift */; };
+		A068567EC4AB58284A9BDA53 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C60C6BDB7F15FCD411603 /* SupabaseService.swift */; };
+		B32480861E250BDEF8C6344A /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470F236FF89601276A971BE /* PaywallView.swift */; };
+		B461DA90BBA9EEFCE5E91E88 /* MacServerSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C379C12624542575FFBFC18 /* MacServerSidebarView.swift */; };
+		B7E773483CABC3F96AA3E2F7 /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CD2FFF926AE1D6218C0BC /* DeepLinkHandler.swift */; };
+		D5B0C2EB455C9BD90F3D3044 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC2B4E207057DF4F9D533B2 /* Server.swift */; };
+		DE4F6A14B39EEF6C9B8748BA /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602526365A82FA21DD49C386 /* MenuBarView.swift */; };
+		E55984914190D386FDAA2A06 /* CommandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D78F96C0CBE14CEB1C87016 /* CommandsView.swift */; };
+		E5E0CAEE864F273F52A170ED /* KestrelComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A112691A07C85CF0185CB3 /* KestrelComponents.swift */; };
+		EEE484B746E25AC2E67C301E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD062C72925D3BFA9E355D8 /* Cocoa.framework */; };
+		F01DD9A648BEA7C0ABB6FBF7 /* ServerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CBE17E2C632A18B3A74E9A /* ServerRepository.swift */; };
+		F1229CF86E39DFC44CE9955A /* MacComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0942090A453E295BC08251A /* MacComponents.swift */; };
+		F420EE3C2971811FB226B191 /* KestrelColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF031E33D53A4541B208FE1 /* KestrelColors.swift */; };
+		F89DFF80A4282338CE4934E2 /* KestrelMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01854B0E1551FD560B8ADA78 /* KestrelMacApp.swift */; };
+		AA1B2C3D4E5F60718293A4B5 /* ServerImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */; };
+		CC3D4E5F60718293A4B5C6D7 /* MacImportServersSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */; };
+		EE5F60718293A4B5C6D7E8F9 /* MacVNCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF60718293A4B5C6D7E8F901 /* MacVNCView.swift */; };
+		1160718293A4B5C6D7E8F902 /* MacRDPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2260718293A4B5C6D7E8F903 /* MacRDPView.swift */; };
+		3360718293A4B5C6D7E8F904 /* MacMultiExecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01854B0E1551FD560B8ADA78 /* KestrelMacApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelMacApp.swift; path = App/KestrelMacApp.swift; sourceTree = "<group>"; };
+		0F3F617CD12DE03C88555B98 /* TerminalView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TerminalView.swift; path = Features/Terminal/TerminalView.swift; sourceTree = "<group>"; };
+		1D78F96C0CBE14CEB1C87016 /* CommandsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommandsView.swift; path = Features/Commands/CommandsView.swift; sourceTree = "<group>"; };
+		2455C9DBAADC864A603E4810 /* ServerListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerListView.swift; path = Features/ServerList/ServerListView.swift; sourceTree = "<group>"; };
+		2775BBE12F8C2A2E008678FA /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		2775BBE22F8C2A2E008678FA /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		2775BBEC2F8C34CE008678FA /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		2775BBEE2F8C38BC008678FA /* MacEditServerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacEditServerSheet.swift; sourceTree = "<group>"; };
+		28CBE17E2C632A18B3A74E9A /* ServerRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerRepository.swift; path = Shared/Services/ServerRepository.swift; sourceTree = "<group>"; };
+		2C7CF303C20431C7195C91C3 /* KestrelColors+Mac.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "KestrelColors+Mac.swift"; path = "Components/KestrelColors+Mac.swift"; sourceTree = "<group>"; };
+		2CBA1C9CD4873FE40A415769 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3BF2D1D3095FE0A9CB650195 /* MacDashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacDashboardView.swift; path = Features/Dashboard/MacDashboardView.swift; sourceTree = "<group>"; };
+		3CF2E07896AB02A24D7A6DF2 /* MacCloudSyncView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacCloudSyncView.swift; path = Features/CloudSync/MacCloudSyncView.swift; sourceTree = "<group>"; };
+		3D0137CDF8E99C4ADAE29485 /* MacMenuCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacMenuCommands.swift; path = App/MacMenuCommands.swift; sourceTree = "<group>"; };
+		42F2C7AADCFBE8238DC55564 /* WindowChromeModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowChromeModifier.swift; path = Components/WindowChrome/WindowChromeModifier.swift; sourceTree = "<group>"; };
+		457F16AF698EECF315909DAA /* SFTPSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SFTPSession.swift; path = Shared/Services/SFTPSession.swift; sourceTree = "<group>"; };
+		478EE238AE851FF09E554FFF /* CloudSyncView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudSyncView.swift; path = Features/CloudSync/CloudSyncView.swift; sourceTree = "<group>"; };
+		4C379C12624542575FFBFC18 /* MacServerSidebarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacServerSidebarView.swift; path = Features/ServerList/MacServerSidebarView.swift; sourceTree = "<group>"; };
+		525F890AC62EF44403C8BDEC /* DashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DashboardView.swift; path = Features/Dashboard/DashboardView.swift; sourceTree = "<group>"; };
+		572CD2FFF926AE1D6218C0BC /* DeepLinkHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeepLinkHandler.swift; path = App/DeepLinkHandler.swift; sourceTree = "<group>"; };
+		5B787D9590BF6FEE0F50C69F /* MacTerminalView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacTerminalView.swift; path = Features/Terminal/MacTerminalView.swift; sourceTree = "<group>"; };
+		602526365A82FA21DD49C386 /* MenuBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarView.swift; path = Components/MenuBar/MenuBarView.swift; sourceTree = "<group>"; };
+		696CB92D9A476E7FF1AB3075 /* SSHSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SSHSessionManager.swift; path = Shared/Services/SSHSessionManager.swift; sourceTree = "<group>"; };
+		6DC2B4E207057DF4F9D533B2 /* Server.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Server.swift; path = Shared/Models/Server.swift; sourceTree = "<group>"; };
+		6E4BFDFC22FD90D49606F888 /* MacSFTPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacSFTPView.swift; path = Features/FileManager/MacSFTPView.swift; sourceTree = "<group>"; };
+		7201FFB56CC380D17BC4F0A4 /* MacContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacContentView.swift; path = App/MacContentView.swift; sourceTree = "<group>"; };
+		760C60C6BDB7F15FCD411603 /* SupabaseService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SupabaseService.swift; path = Shared/Services/SupabaseService.swift; sourceTree = "<group>"; };
+		7DF031E33D53A4541B208FE1 /* KestrelColors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelColors.swift; path = Shared/Models/KestrelColors.swift; sourceTree = "<group>"; };
+		814EF6A0EA78FADA4DF2510B /* KestrelFonts+Mac.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "KestrelFonts+Mac.swift"; path = "Components/KestrelFonts+Mac.swift"; sourceTree = "<group>"; };
+		83A473DD6A8A755565913139 /* MacPaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacPaywallView.swift; path = Features/Paywall/MacPaywallView.swift; sourceTree = "<group>"; };
+		93D28042070FA1A29B762D48 /* KestrelMac.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KestrelMac.entitlements; sourceTree = "<group>"; };
+		997CB85E9B06AACE3929846C /* NotificationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationManager.swift; path = App/NotificationManager.swift; sourceTree = "<group>"; };
+		A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SavedCommand.swift; path = Shared/Models/SavedCommand.swift; sourceTree = "<group>"; };
+		A21896642FCC5781B4956D33 /* FileManagerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileManagerView.swift; path = Features/FileManager/FileManagerView.swift; sourceTree = "<group>"; };
+		ABD062C72925D3BFA9E355D8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		D13C0BF692B82991A40066F8 /* RevenueCatService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RevenueCatService.swift; path = Shared/Services/RevenueCatService.swift; sourceTree = "<group>"; };
+		D470F236FF89601276A971BE /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaywallView.swift; path = Features/Paywall/PaywallView.swift; sourceTree = "<group>"; };
+		D767937D3F0244AE97C1CF4B /* Kestrel Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kestrel Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9A112691A07C85CF0185CB3 /* KestrelComponents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelComponents.swift; path = Shared/Models/KestrelComponents.swift; sourceTree = "<group>"; };
+		E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacSettingsView.swift; path = Settings/MacSettingsView.swift; sourceTree = "<group>"; };
+		EFF60EF62FC579DAD3FFB38E /* KestrelFonts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelFonts.swift; path = Shared/Models/KestrelFonts.swift; sourceTree = "<group>"; };
+		F0942090A453E295BC08251A /* MacComponents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacComponents.swift; path = Components/MacComponents.swift; sourceTree = "<group>"; };
+		FEBF1A9F5C11BDAD7001D5BE /* MacCommandLibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacCommandLibraryView.swift; path = Features/Commands/MacCommandLibraryView.swift; sourceTree = "<group>"; };
+		BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerImportService.swift; path = Shared/Services/ServerImportService.swift; sourceTree = "<group>"; };
+		DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacImportServersSheet.swift; path = Features/ServerList/MacImportServersSheet.swift; sourceTree = "<group>"; };
+		FF60718293A4B5C6D7E8F901 /* MacVNCView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacVNCView.swift; path = Features/VNC/MacVNCView.swift; sourceTree = "<group>"; };
+		2260718293A4B5C6D7E8F903 /* MacRDPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacRDPView.swift; path = Features/RDP/MacRDPView.swift; sourceTree = "<group>"; };
+		4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacMultiExecView.swift; path = Features/MultiExec/MacMultiExecView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		112F46366689C0FA1F4F7BE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2775BBEB2F8C3295008678FA /* Citadel in Frameworks */,
+				EEE484B746E25AC2E67C301E /* Cocoa.framework in Frameworks */,
+				0D84CD0CFD1E155187E5FEBA /* RevenueCat in Frameworks */,
+				1985CB19F33D4665974B74E8 /* SwiftTerm in Frameworks */,
+				6280A5B35D76B2752D3263B5 /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00BC38A882DCB5178EC46D2C /* KestrelMac */ = {
+			isa = PBXGroup;
+			children = (
+				E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */,
+				7201FFB56CC380D17BC4F0A4 /* MacContentView.swift */,
+				01854B0E1551FD560B8ADA78 /* KestrelMacApp.swift */,
+				478EE238AE851FF09E554FFF /* CloudSyncView.swift */,
+				0F3F617CD12DE03C88555B98 /* TerminalView.swift */,
+				525F890AC62EF44403C8BDEC /* DashboardView.swift */,
+				A21896642FCC5781B4956D33 /* FileManagerView.swift */,
+				1D78F96C0CBE14CEB1C87016 /* CommandsView.swift */,
+				2455C9DBAADC864A603E4810 /* ServerListView.swift */,
+				D470F236FF89601276A971BE /* PaywallView.swift */,
+				6DC2B4E207057DF4F9D533B2 /* Server.swift */,
+				D13C0BF692B82991A40066F8 /* RevenueCatService.swift */,
+				28CBE17E2C632A18B3A74E9A /* ServerRepository.swift */,
+				760C60C6BDB7F15FCD411603 /* SupabaseService.swift */,
+				696CB92D9A476E7FF1AB3075 /* SSHSessionManager.swift */,
+				602526365A82FA21DD49C386 /* MenuBarView.swift */,
+				42F2C7AADCFBE8238DC55564 /* WindowChromeModifier.swift */,
+				2CBA1C9CD4873FE40A415769 /* Assets.xcassets */,
+				93D28042070FA1A29B762D48 /* KestrelMac.entitlements */,
+				F0942090A453E295BC08251A /* MacComponents.swift */,
+				2C7CF303C20431C7195C91C3 /* KestrelColors+Mac.swift */,
+				814EF6A0EA78FADA4DF2510B /* KestrelFonts+Mac.swift */,
+				7DF031E33D53A4541B208FE1 /* KestrelColors.swift */,
+				EFF60EF62FC579DAD3FFB38E /* KestrelFonts.swift */,
+				4C379C12624542575FFBFC18 /* MacServerSidebarView.swift */,
+				D9A112691A07C85CF0185CB3 /* KestrelComponents.swift */,
+				5B787D9590BF6FEE0F50C69F /* MacTerminalView.swift */,
+				3BF2D1D3095FE0A9CB650195 /* MacDashboardView.swift */,
+				6E4BFDFC22FD90D49606F888 /* MacSFTPView.swift */,
+				457F16AF698EECF315909DAA /* SFTPSession.swift */,
+				FEBF1A9F5C11BDAD7001D5BE /* MacCommandLibraryView.swift */,
+				A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */,
+				3CF2E07896AB02A24D7A6DF2 /* MacCloudSyncView.swift */,
+				83A473DD6A8A755565913139 /* MacPaywallView.swift */,
+				3D0137CDF8E99C4ADAE29485 /* MacMenuCommands.swift */,
+				572CD2FFF926AE1D6218C0BC /* DeepLinkHandler.swift */,
+				997CB85E9B06AACE3929846C /* NotificationManager.swift */,
+				2775BBEE2F8C38BC008678FA /* MacEditServerSheet.swift */,
+				2775BBE22F8C2A2E008678FA /* ThemeManager.swift */,
+				2775BBE12F8C2A2E008678FA /* AppTheme.swift */,
+				2775BBEC2F8C34CE008678FA /* KeychainService.swift */,
+				BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */,
+				DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */,
+				FF60718293A4B5C6D7E8F901 /* MacVNCView.swift */,
+				2260718293A4B5C6D7E8F903 /* MacRDPView.swift */,
+				4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */,
+			);
+			path = KestrelMac;
+			sourceTree = "<group>";
+		};
+		279E39292F88EBFD0016E4E5 = {
+			isa = PBXGroup;
+			children = (
+				279E39332F88EBFD0016E4E5 /* Products */,
+				E211DE5EC7D9016CB64F3E4B /* Frameworks */,
+				00BC38A882DCB5178EC46D2C /* KestrelMac */,
+			);
+			sourceTree = "<group>";
+		};
+		279E39332F88EBFD0016E4E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D767937D3F0244AE97C1CF4B /* Kestrel Mac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		344F6AE37C99B6C747843191 /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				ABD062C72925D3BFA9E355D8 /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		E211DE5EC7D9016CB64F3E4B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				344F6AE37C99B6C747843191 /* OS X */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		852AA93AA51F11E3140BBDB5 /* Kestrel Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 171EB25E0708C86DBBF19AE9 /* Build configuration list for PBXNativeTarget "Kestrel Mac" */;
+			buildPhases = (
+				0B016E5E4484517FE8D1A8F9 /* Sources */,
+				112F46366689C0FA1F4F7BE7 /* Frameworks */,
+				6077C5F4C06244292CB04154 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Kestrel Mac";
+			packageProductDependencies = (
+				2FA7BA56880C65B82BDD7E64 /* RevenueCat */,
+				DE496F65C74BA52C97FB3DC0 /* SwiftTerm */,
+				14FC7C2CD0FC462FD42C5574 /* Supabase */,
+				2775BBEA2F8C3295008678FA /* Citadel */,
+			);
+			productName = "Kestrel Mac";
+			productReference = D767937D3F0244AE97C1CF4B /* Kestrel Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		279E392A2F88EBFD0016E4E5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					852AA93AA51F11E3140BBDB5 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "Kestrel MacOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 279E39292F88EBFD0016E4E5;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				67D1781D359984D1094F17BD /* XCRemoteSwiftPackageReference "purchases-ios" */,
+				1ADE412195AB08F617FFC71E /* XCRemoteSwiftPackageReference "SwiftTerm" */,
+				7CF9E006615CC6D121BFBB61 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				2775BBE92F8C3295008678FA /* XCRemoteSwiftPackageReference "Citadel" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 279E39332F88EBFD0016E4E5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				852AA93AA51F11E3140BBDB5 /* Kestrel Mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6077C5F4C06244292CB04154 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37168FCE381D5FEEBEE75632 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0B016E5E4484517FE8D1A8F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2775BBE32F8C2A2E008678FA /* AppTheme.swift in Sources */,
+				2775BBE42F8C2A2E008678FA /* ThemeManager.swift in Sources */,
+				2B8262C3B4BFB89FFBC6487A /* MacSettingsView.swift in Sources */,
+				4FE237E7A9AAB9D70FB0DA61 /* MacContentView.swift in Sources */,
+				F89DFF80A4282338CE4934E2 /* KestrelMacApp.swift in Sources */,
+				581C2D174DE91197ECFFEFEE /* CloudSyncView.swift in Sources */,
+				17DA24D5608732C2CB67BAC9 /* TerminalView.swift in Sources */,
+				98B7C98FB63E35F0EEBEA427 /* DashboardView.swift in Sources */,
+				2775BBEF2F8C38BC008678FA /* MacEditServerSheet.swift in Sources */,
+				99D3BCBE9260E76FF9F448D1 /* FileManagerView.swift in Sources */,
+				E55984914190D386FDAA2A06 /* CommandsView.swift in Sources */,
+				85A21575D463B7C287719026 /* ServerListView.swift in Sources */,
+				B32480861E250BDEF8C6344A /* PaywallView.swift in Sources */,
+				D5B0C2EB455C9BD90F3D3044 /* Server.swift in Sources */,
+				1B9AC6057BD4CD8061B32BE9 /* RevenueCatService.swift in Sources */,
+				F01DD9A648BEA7C0ABB6FBF7 /* ServerRepository.swift in Sources */,
+				A068567EC4AB58284A9BDA53 /* SupabaseService.swift in Sources */,
+				88D0FF659A2B6B37585B13AA /* SSHSessionManager.swift in Sources */,
+				DE4F6A14B39EEF6C9B8748BA /* MenuBarView.swift in Sources */,
+				83C24333A6B08B967273AD32 /* WindowChromeModifier.swift in Sources */,
+				F1229CF86E39DFC44CE9955A /* MacComponents.swift in Sources */,
+				18C342815A84BFA51A0EE10F /* KestrelColors+Mac.swift in Sources */,
+				420EA9FC71CEF80F0C92C83F /* KestrelFonts+Mac.swift in Sources */,
+				F420EE3C2971811FB226B191 /* KestrelColors.swift in Sources */,
+				3C461F43671571422946961D /* KestrelFonts.swift in Sources */,
+				B461DA90BBA9EEFCE5E91E88 /* MacServerSidebarView.swift in Sources */,
+				E5E0CAEE864F273F52A170ED /* KestrelComponents.swift in Sources */,
+				7688F39485AF5EFDEDE064D5 /* MacTerminalView.swift in Sources */,
+				8AFEB282056A6B1A0B5696F7 /* MacDashboardView.swift in Sources */,
+				26E6AE2D38E52B6DBC8F1729 /* MacSFTPView.swift in Sources */,
+				63E545C67DCF3E3EDB6EFE78 /* SFTPSession.swift in Sources */,
+				335E1D41178934DE894008FF /* MacCommandLibraryView.swift in Sources */,
+				874C15F468D520280D5BD47E /* SavedCommand.swift in Sources */,
+				9483CE72339C047EE32A2FC1 /* MacCloudSyncView.swift in Sources */,
+				2775BBED2F8C34CE008678FA /* KeychainService.swift in Sources */,
+				06090DCA53EC265FADAC88B9 /* MacPaywallView.swift in Sources */,
+				362DCBCBB193A0D549DC9AFD /* MacMenuCommands.swift in Sources */,
+				B7E773483CABC3F96AA3E2F7 /* DeepLinkHandler.swift in Sources */,
+				863A36FCEB357F2C0F3ABD51 /* NotificationManager.swift in Sources */,
+				AA1B2C3D4E5F60718293A4B5 /* ServerImportService.swift in Sources */,
+				CC3D4E5F60718293A4B5C6D7 /* MacImportServersSheet.swift in Sources */,
+				EE5F60718293A4B5C6D7E8F9 /* MacVNCView.swift in Sources */,
+				1160718293A4B5C6D7E8F902 /* MacRDPView.swift in Sources */,
+				3360718293A4B5C6D7E8F904 /* MacMultiExecView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		24014C114B758DF766092509 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KestrelMac/KestrelMac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6WLRKM68KD;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KestrelMac/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.kestrel.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		279E393B2F88EBFE0016E4E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6WLRKM68KD;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		279E393C2F88EBFE0016E4E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6WLRKM68KD;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		C9E652CE4E76D53392A5A062 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KestrelMac/KestrelMac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6WLRKM68KD;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KestrelMac/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.kestrel.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		171EB25E0708C86DBBF19AE9 /* Build configuration list for PBXNativeTarget "Kestrel Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24014C114B758DF766092509 /* Release */,
+				C9E652CE4E76D53392A5A062 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "Kestrel MacOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				279E393B2F88EBFE0016E4E5 /* Debug */,
+				279E393C2F88EBFE0016E4E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1ADE412195AB08F617FFC71E /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+		2775BBE92F8C3295008678FA /* XCRemoteSwiftPackageReference "Citadel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orlandos-nl/Citadel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.1;
+			};
+		};
+		67D1781D359984D1094F17BD /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		7CF9E006615CC6D121BFBB61 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		14FC7C2CD0FC462FD42C5574 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CF9E006615CC6D121BFBB61 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+		2775BBEA2F8C3295008678FA /* Citadel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2775BBE92F8C3295008678FA /* XCRemoteSwiftPackageReference "Citadel" */;
+			productName = Citadel;
+		};
+		2FA7BA56880C65B82BDD7E64 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 67D1781D359984D1094F17BD /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+		DE496F65C74BA52C97FB3DC0 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1ADE412195AB08F617FFC71E /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			productName = SwiftTerm;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 279E392A2F88EBFD0016E4E5 /* Project object */;
+}
