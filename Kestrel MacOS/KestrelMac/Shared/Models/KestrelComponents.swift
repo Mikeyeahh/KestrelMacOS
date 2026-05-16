@@ -30,6 +30,17 @@ struct StatusDot: View {
     }
 }
 
+// Reacts to live SSH session state via Observation, with a fallback to the
+// server's last known status when there is no active session.
+struct LiveServerStatusDot: View {
+    let session: SSHSession?
+    let fallback: ServerStatus
+
+    var body: some View {
+        StatusDot(status: session?.isConnected == true ? .online : fallback)
+    }
+}
+
 // MARK: - EnvBadge
 
 struct EnvBadge: View {

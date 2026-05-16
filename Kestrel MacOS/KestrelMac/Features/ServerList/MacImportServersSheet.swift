@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 
 struct MacImportServersSheet: View {
     @EnvironmentObject var serverRepository: ServerRepository
+    @EnvironmentObject var revenueCatService: RevenueCatService
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedSource: ImportSource = .mobaXterm
@@ -21,6 +22,7 @@ struct MacImportServersSheet: View {
     @State private var isImporting = false
     @State private var importComplete = false
     @State private var importedCount = 0
+    @State private var showingPaywall = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -50,6 +52,9 @@ struct MacImportServersSheet: View {
             allowsMultipleSelection: false
         ) { result in
             handleFileSelection(result)
+        }
+        .sheet(isPresented: $showingPaywall) {
+            MacPaywallView()
         }
     }
 
@@ -179,8 +184,28 @@ struct MacImportServersSheet: View {
 
     // MARK: - Preview
 
+    private var freePlanRemaining: Int {
+        max(0, RevenueCatService.freeServerLimit - serverRepository.servers.count)
+    }
+
     private func previewSection(_ result: ImportResult) -> some View {
         VStack(alignment: .leading, spacing: 0) {
+            // Free-plan hint
+            if !revenueCatService.isProOrBundle {
+                HStack(spacing: 6) {
+                    Image(systemName: "info.circle")
+                        .foregroundStyle(KestrelColors.amber)
+                        .font(.system(size: 10))
+                    Text("Free plan: \(freePlanRemaining) of \(RevenueCatService.freeServerLimit) server slot\(freePlanRemaining == 1 ? "" : "s") remaining. Upgrade to Pro for unlimited.")
+                        .font(KestrelFonts.mono(10))
+                        .foregroundStyle(KestrelColors.amber)
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 6)
+                .background(KestrelColors.backgroundCard)
+            }
+
             // Toolbar
             HStack(spacing: 10) {
                 Text("\(result.servers.count) server\(result.servers.count == 1 ? "" : "s") found")
@@ -371,8 +396,34 @@ struct MacImportServersSheet: View {
     }
 
     private func performImport(_ result: ImportResult) {
-        isImporting = true
+        let currentCount = serverRepository.servers.count
         let toImport = result.servers.filter { selectedServers.contains($0.id) }
+        
+        // Check limits for free tier
+        if !revenueCatService.isProOrBundle {
+            if (currentCount + toImport.count) > RevenueCatService.freeServerLimit {
+                showingPaywall = true
+                return
+            }
+        }
+
+        isImporting = true
+
+        // Auto-create any group referenced by an imported server
+        // that doesn't already exist in the repository.
+        let importedGroupNames = Set(
+            toImport.compactMap { $0.group?.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .filter { !$0.isEmpty }
+        )
+        for name in importedGroupNames {
+            let exists = serverRepository.groups.contains {
+                $0.name.caseInsensitiveCompare(name) == .orderedSame
+            }
+            if !exists {
+                let nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
+                serverRepository.addGroup(ServerGroup(name: name, orderIndex: nextOrder))
+            }
+        }
 
         for server in toImport {
             serverRepository.addServer(server)

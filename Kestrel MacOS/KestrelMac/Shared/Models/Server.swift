@@ -65,7 +65,7 @@ struct Server: Identifiable, Hashable, Codable {
         privateKeyID: UUID? = nil,
         group: String? = nil,
         environment: String = "other",
-        colour: String = "#00FF41",
+        colour: String = "#00FF9C",
         status: ServerStatus = .offline,
         cpuUsage: Double = 0,
         os: String = "Linux",
@@ -118,7 +118,7 @@ struct Server: Identifiable, Hashable, Codable {
         privateKeyID = try container.decodeIfPresent(UUID.self, forKey: .privateKeyID)
         group = try container.decodeIfPresent(String.self, forKey: .group)
         environment = try container.decodeIfPresent(String.self, forKey: .environment) ?? "other"
-        colour = try container.decodeIfPresent(String.self, forKey: .colour) ?? "#00FF41"
+        colour = try container.decodeIfPresent(String.self, forKey: .colour) ?? "#00FF9C"
         tags = try container.decodeIfPresent([String].self, forKey: .tags) ?? []
         orderIndex = try container.decodeIfPresent(Int.self, forKey: .orderIndex) ?? 0
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
@@ -170,7 +170,7 @@ struct ServerGroup: Identifiable, Hashable, Codable {
         id: UUID = UUID(),
         userId: UUID? = nil,
         name: String,
-        colour: String = "#00FF41",
+        colour: String = "#00FF9C",
         orderIndex: Int = 0
     ) {
         self.id = id

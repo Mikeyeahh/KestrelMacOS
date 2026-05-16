@@ -3,7 +3,7 @@
 //  Kestrel Mac
 //
 //  macOS-specific component adaptations of the Kestrel design system.
-//  Uses the same KestrelColors constants as iOS (#00FF41, #FFB800, #FF3B5C, #00C8FF).
+//  Uses the same KestrelColors constants as iOS (#00FF9C, #FFB800, #FF3B5C, #00C8FF).
 //
 
 import SwiftUI
@@ -273,16 +273,52 @@ struct MacSidebarRow: View {
 
 struct MacSidebarSectionHeader: View {
     let title: String
+    var accentColor: Color? = nil
 
     var body: some View {
         Text(title.uppercased())
             .font(KestrelFonts.mono(10))
             .fontWeight(.medium)
             .tracking(1.2)
-            .foregroundStyle(KestrelColors.textFaint)
+            .foregroundStyle(accentColor ?? KestrelColors.textFaint)
             .padding(.horizontal, 10)
             .padding(.top, 12)
             .padding(.bottom, 4)
+    }
+}
+
+// MARK: - Hex Color Helpers
+
+extension Color {
+    /// Initialize a Color from a `#RRGGBB` or `#RRGGBBAA` hex string.
+    /// Returns nil for malformed input.
+    init?(hex: String) {
+        var s = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        if s.hasPrefix("#") { s.removeFirst() }
+        guard s.count == 6 || s.count == 8,
+              let value = UInt64(s, radix: 16) else { return nil }
+        let r, g, b, a: Double
+        if s.count == 6 {
+            r = Double((value >> 16) & 0xFF) / 255
+            g = Double((value >> 8) & 0xFF) / 255
+            b = Double(value & 0xFF) / 255
+            a = 1
+        } else {
+            r = Double((value >> 24) & 0xFF) / 255
+            g = Double((value >> 16) & 0xFF) / 255
+            b = Double((value >> 8) & 0xFF) / 255
+            a = Double(value & 0xFF) / 255
+        }
+        self = Color(.sRGB, red: r, green: g, blue: b, opacity: a)
+    }
+
+    /// Returns a `#RRGGBB` representation of the color (alpha discarded).
+    func toHex() -> String {
+        let ns = NSColor(self).usingColorSpace(.sRGB) ?? NSColor(self)
+        let r = Int(round(ns.redComponent * 255))
+        let g = Int(round(ns.greenComponent * 255))
+        let b = Int(round(ns.blueComponent * 255))
+        return String(format: "#%02X%02X%02X", r, g, b)
     }
 }
 
@@ -353,7 +389,7 @@ struct MacContentSplitView<Sidebar: View, Content: View, Inspector: View>: View 
     var body: some View {
         NavigationSplitView {
             sidebar()
-                .navigationSplitViewColumnWidth(min: 180, ideal: 200, max: 220)
+                .navigationSplitViewColumnWidth(min: 180, ideal: 240, max: 500)
         } detail: {
             HStack(spacing: 0) {
                 content()

@@ -379,10 +379,15 @@ struct MacTerminalPane: View {
     var connectionError: String?
 
     @AppStorage("mac.terminal.fontSize") private var fontSize: Double = 12
-    @AppStorage("mac.terminal.colorScheme") private var colorSchemeName = "Kestrel"
+    @AppStorage("mac.terminal.colorScheme") private var colorSchemeName = TerminalColorScheme.matchAppThemeID
+    @AppStorage("app.theme") private var appThemeRaw = AppThemeID.phosphor.rawValue
 
     private var terminalScheme: TerminalColorScheme {
-        TerminalColorScheme(rawValue: colorSchemeName) ?? .kestrel
+        if colorSchemeName == TerminalColorScheme.matchAppThemeID {
+            let id = AppThemeID(rawValue: appThemeRaw) ?? .phosphor
+            return .forAppTheme(id)
+        }
+        return TerminalColorScheme(rawValue: colorSchemeName) ?? .kestrel
     }
 
     var body: some View {
@@ -481,6 +486,22 @@ enum TerminalColorScheme: String, CaseIterable {
     case amber = "Amber"
     case solarized = "Solarized Dark"
     case dracula = "Dracula"
+    case midnight = "Midnight"
+    case arctic = "Arctic"
+    case mono = "Mono"
+
+    static let matchAppThemeID = "_match"
+
+    static func forAppTheme(_ id: AppThemeID) -> TerminalColorScheme {
+        switch id {
+        case .phosphor: .kestrel
+        case .dracula:  .dracula
+        case .midnight: .midnight
+        case .arctic:   .arctic
+        case .ember:    .amber
+        case .mono:     .mono
+        }
+    }
 
     var foreground: (CGFloat, CGFloat, CGFloat) {
         switch self {
@@ -489,6 +510,9 @@ enum TerminalColorScheme: String, CaseIterable {
         case .amber: (1, 0.722, 0)
         case .solarized: (0.514, 0.580, 0.588)
         case .dracula: (0.973, 0.973, 0.949)
+        case .midnight: (0.85, 0.90, 1.0)
+        case .arctic: (0.78, 0.92, 1.0)
+        case .mono: (1, 1, 1)
         }
     }
 
@@ -499,6 +523,9 @@ enum TerminalColorScheme: String, CaseIterable {
         case .amber: (0.05, 0.03, 0)
         case .solarized: (0, 0.169, 0.212)
         case .dracula: (0.157, 0.165, 0.212)
+        case .midnight: (0.039, 0.055, 0.102)
+        case .arctic: (0.039, 0.086, 0.157)
+        case .mono: (0, 0, 0)
         }
     }
 
@@ -538,6 +565,27 @@ enum TerminalColorScheme: String, CaseIterable {
                 (0xBD, 0x93, 0xF9), (0xFF, 0x79, 0xC6), (0x8B, 0xE9, 0xFD), (0xF8, 0xF8, 0xF2),
                 (0x62, 0x72, 0xA4), (0xFF, 0x6E, 0x6E), (0x69, 0xFF, 0x94), (0xFF, 0xFB, 0xA6),
                 (0xD6, 0xAC, 0xFF), (0xFF, 0x92, 0xDF), (0xA4, 0xFF, 0xFF), (0xFF, 0xFF, 0xFF),
+            ]
+        case .midnight:
+            [
+                (0x0A, 0x0E, 0x1A), (0xFF, 0x3B, 0x5C), (0x66, 0xCC, 0x88), (0xFF, 0xB8, 0x00),
+                (0x5B, 0x9C, 0xFF), (0xA8, 0x8B, 0xFF), (0x66, 0xD9, 0xEF), (0xCC, 0xD6, 0xE5),
+                (0x3A, 0x4A, 0x66), (0xFF, 0x6B, 0x82), (0x88, 0xE0, 0xA8), (0xFF, 0xD7, 0x4D),
+                (0x88, 0xC0, 0xFF), (0xC4, 0xAE, 0xFF), (0x99, 0xE8, 0xF5), (0xFF, 0xFF, 0xFF),
+            ]
+        case .arctic:
+            [
+                (0x0A, 0x16, 0x28), (0xFF, 0x5C, 0x6B), (0x66, 0xE0, 0xC8), (0xFF, 0xC8, 0x4D),
+                (0x00, 0xD4, 0xFF), (0x99, 0xC8, 0xFF), (0x4D, 0xE8, 0xE8), (0xD6, 0xE8, 0xF5),
+                (0x3A, 0x5A, 0x7A), (0xFF, 0x8B, 0x99), (0x99, 0xF0, 0xDD), (0xFF, 0xDC, 0x88),
+                (0x66, 0xE4, 0xFF), (0xBB, 0xDC, 0xFF), (0x88, 0xF5, 0xF5), (0xFF, 0xFF, 0xFF),
+            ]
+        case .mono:
+            [
+                (0x00, 0x00, 0x00), (0xBB, 0xBB, 0xBB), (0xCC, 0xCC, 0xCC), (0xDD, 0xDD, 0xDD),
+                (0xAA, 0xAA, 0xAA), (0xBB, 0xBB, 0xBB), (0xCC, 0xCC, 0xCC), (0xEE, 0xEE, 0xEE),
+                (0x55, 0x55, 0x55), (0xFF, 0xFF, 0xFF), (0xFF, 0xFF, 0xFF), (0xFF, 0xFF, 0xFF),
+                (0xFF, 0xFF, 0xFF), (0xFF, 0xFF, 0xFF), (0xFF, 0xFF, 0xFF), (0xFF, 0xFF, 0xFF),
             ]
         }
     }

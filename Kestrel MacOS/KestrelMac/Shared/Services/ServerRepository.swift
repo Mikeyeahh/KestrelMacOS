@@ -171,4 +171,9 @@ class ServerRepository: ObservableObject {
             // Silently fail — groups will stay local-only
         }
     }
+
+    func clearAll() {
+        servers = []
+        groups = []
+    }
 }
