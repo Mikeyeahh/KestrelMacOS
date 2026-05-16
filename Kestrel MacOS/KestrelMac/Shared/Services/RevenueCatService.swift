@@ -65,7 +65,7 @@ class RevenueCatService: ObservableObject {
     static let shared = RevenueCatService()
 
     /// Maximum number of servers a free-tier user can have.
-    static let freeServerLimit = 2
+    static let freeServerLimit = 5
     /// Maximum number of SSH keys a free-tier user can have.
     static let freeKeyLimit = 3
 
