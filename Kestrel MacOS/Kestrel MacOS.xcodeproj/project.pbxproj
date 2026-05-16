@@ -9,11 +9,17 @@
 /* Begin PBXBuildFile section */
 		06090DCA53EC265FADAC88B9 /* MacPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A473DD6A8A755565913139 /* MacPaywallView.swift */; };
 		0D84CD0CFD1E155187E5FEBA /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 2FA7BA56880C65B82BDD7E64 /* RevenueCat */; };
+		1160718293A4B5C6D7E8F902 /* MacRDPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2260718293A4B5C6D7E8F903 /* MacRDPView.swift */; };
 		17DA24D5608732C2CB67BAC9 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3F617CD12DE03C88555B98 /* TerminalView.swift */; };
 		18C342815A84BFA51A0EE10F /* KestrelColors+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CF303C20431C7195C91C3 /* KestrelColors+Mac.swift */; };
 		1985CB19F33D4665974B74E8 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = DE496F65C74BA52C97FB3DC0 /* SwiftTerm */; };
 		1B9AC6057BD4CD8061B32BE9 /* RevenueCatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13C0BF692B82991A40066F8 /* RevenueCatService.swift */; };
 		26E6AE2D38E52B6DBC8F1729 /* MacSFTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4BFDFC22FD90D49606F888 /* MacSFTPView.swift */; };
+		271EB9932FA382B800665375 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271EB9922FA382B800665375 /* StoreKit.framework */; };
+		274397BB2FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 274397B62FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf */; };
+		274397BC2FB3C0D500BC9E24 /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 274397B92FB3C0D500BC9E24 /* JetBrainsMono-Regular.ttf */; };
+		274397BD2FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 274397B72FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf */; };
+		274397BE2FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 274397B82FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf */; };
 		2775BBE32F8C2A2E008678FA /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBE12F8C2A2E008678FA /* AppTheme.swift */; };
 		2775BBE42F8C2A2E008678FA /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBE22F8C2A2E008678FA /* ThemeManager.swift */; };
 		2775BBEB2F8C3295008678FA /* Citadel in Frameworks */ = {isa = PBXBuildFile; productRef = 2775BBEA2F8C3295008678FA /* Citadel */; };
@@ -21,6 +27,7 @@
 		2775BBEF2F8C38BC008678FA /* MacEditServerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBEE2F8C38BC008678FA /* MacEditServerSheet.swift */; };
 		2B8262C3B4BFB89FFBC6487A /* MacSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */; };
 		335E1D41178934DE894008FF /* MacCommandLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF1A9F5C11BDAD7001D5BE /* MacCommandLibraryView.swift */; };
+		3360718293A4B5C6D7E8F904 /* MacMultiExecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */; };
 		362DCBCBB193A0D549DC9AFD /* MacMenuCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0137CDF8E99C4ADAE29485 /* MacMenuCommands.swift */; };
 		37168FCE381D5FEEBEE75632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBA1C9CD4873FE40A415769 /* Assets.xcassets */; };
 		3C461F43671571422946961D /* KestrelFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF60EF62FC579DAD3FFB38E /* KestrelFonts.swift */; };
@@ -40,30 +47,34 @@
 		98B7C98FB63E35F0EEBEA427 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F890AC62EF44403C8BDEC /* DashboardView.swift */; };
 		99D3BCBE9260E76FF9F448D1 /* FileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21896642FCC5781B4956D33 /* FileManagerView.swift */; };
 		A068567EC4AB58284A9BDA53 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C60C6BDB7F15FCD411603 /* SupabaseService.swift */; };
+		AA1B2C3D4E5F60718293A4B5 /* ServerImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */; };
 		B32480861E250BDEF8C6344A /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470F236FF89601276A971BE /* PaywallView.swift */; };
 		B461DA90BBA9EEFCE5E91E88 /* MacServerSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C379C12624542575FFBFC18 /* MacServerSidebarView.swift */; };
 		B7E773483CABC3F96AA3E2F7 /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CD2FFF926AE1D6218C0BC /* DeepLinkHandler.swift */; };
+		CC3D4E5F60718293A4B5C6D7 /* MacImportServersSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */; };
 		D5B0C2EB455C9BD90F3D3044 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC2B4E207057DF4F9D533B2 /* Server.swift */; };
 		DE4F6A14B39EEF6C9B8748BA /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602526365A82FA21DD49C386 /* MenuBarView.swift */; };
 		E55984914190D386FDAA2A06 /* CommandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D78F96C0CBE14CEB1C87016 /* CommandsView.swift */; };
 		E5E0CAEE864F273F52A170ED /* KestrelComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A112691A07C85CF0185CB3 /* KestrelComponents.swift */; };
+		EE5F60718293A4B5C6D7E8F9 /* MacVNCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF60718293A4B5C6D7E8F901 /* MacVNCView.swift */; };
 		EEE484B746E25AC2E67C301E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD062C72925D3BFA9E355D8 /* Cocoa.framework */; };
 		F01DD9A648BEA7C0ABB6FBF7 /* ServerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CBE17E2C632A18B3A74E9A /* ServerRepository.swift */; };
 		F1229CF86E39DFC44CE9955A /* MacComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0942090A453E295BC08251A /* MacComponents.swift */; };
 		F420EE3C2971811FB226B191 /* KestrelColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF031E33D53A4541B208FE1 /* KestrelColors.swift */; };
 		F89DFF80A4282338CE4934E2 /* KestrelMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01854B0E1551FD560B8ADA78 /* KestrelMacApp.swift */; };
-		AA1B2C3D4E5F60718293A4B5 /* ServerImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */; };
-		CC3D4E5F60718293A4B5C6D7 /* MacImportServersSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */; };
-		EE5F60718293A4B5C6D7E8F9 /* MacVNCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF60718293A4B5C6D7E8F901 /* MacVNCView.swift */; };
-		1160718293A4B5C6D7E8F902 /* MacRDPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2260718293A4B5C6D7E8F903 /* MacRDPView.swift */; };
-		3360718293A4B5C6D7E8F904 /* MacMultiExecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		01854B0E1551FD560B8ADA78 /* KestrelMacApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelMacApp.swift; path = App/KestrelMacApp.swift; sourceTree = "<group>"; };
 		0F3F617CD12DE03C88555B98 /* TerminalView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TerminalView.swift; path = Features/Terminal/TerminalView.swift; sourceTree = "<group>"; };
 		1D78F96C0CBE14CEB1C87016 /* CommandsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommandsView.swift; path = Features/Commands/CommandsView.swift; sourceTree = "<group>"; };
+		2260718293A4B5C6D7E8F903 /* MacRDPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacRDPView.swift; path = Features/RDP/MacRDPView.swift; sourceTree = "<group>"; };
 		2455C9DBAADC864A603E4810 /* ServerListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerListView.swift; path = Features/ServerList/ServerListView.swift; sourceTree = "<group>"; };
+		271EB9922FA382B800665375 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		274397B62FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Bold.ttf"; sourceTree = "<group>"; };
+		274397B72FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Italic.ttf"; sourceTree = "<group>"; };
+		274397B82FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Medium.ttf"; sourceTree = "<group>"; };
+		274397B92FB3C0D500BC9E24 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
 		2775BBE12F8C2A2E008678FA /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		2775BBE22F8C2A2E008678FA /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		2775BBEC2F8C34CE008678FA /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -75,6 +86,7 @@
 		3CF2E07896AB02A24D7A6DF2 /* MacCloudSyncView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacCloudSyncView.swift; path = Features/CloudSync/MacCloudSyncView.swift; sourceTree = "<group>"; };
 		3D0137CDF8E99C4ADAE29485 /* MacMenuCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacMenuCommands.swift; path = App/MacMenuCommands.swift; sourceTree = "<group>"; };
 		42F2C7AADCFBE8238DC55564 /* WindowChromeModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowChromeModifier.swift; path = Components/WindowChrome/WindowChromeModifier.swift; sourceTree = "<group>"; };
+		4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacMultiExecView.swift; path = Features/MultiExec/MacMultiExecView.swift; sourceTree = "<group>"; };
 		457F16AF698EECF315909DAA /* SFTPSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SFTPSession.swift; path = Shared/Services/SFTPSession.swift; sourceTree = "<group>"; };
 		478EE238AE851FF09E554FFF /* CloudSyncView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudSyncView.swift; path = Features/CloudSync/CloudSyncView.swift; sourceTree = "<group>"; };
 		4C379C12624542575FFBFC18 /* MacServerSidebarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacServerSidebarView.swift; path = Features/ServerList/MacServerSidebarView.swift; sourceTree = "<group>"; };
@@ -95,19 +107,17 @@
 		A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SavedCommand.swift; path = Shared/Models/SavedCommand.swift; sourceTree = "<group>"; };
 		A21896642FCC5781B4956D33 /* FileManagerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileManagerView.swift; path = Features/FileManager/FileManagerView.swift; sourceTree = "<group>"; };
 		ABD062C72925D3BFA9E355D8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerImportService.swift; path = Shared/Services/ServerImportService.swift; sourceTree = "<group>"; };
 		D13C0BF692B82991A40066F8 /* RevenueCatService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RevenueCatService.swift; path = Shared/Services/RevenueCatService.swift; sourceTree = "<group>"; };
 		D470F236FF89601276A971BE /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaywallView.swift; path = Features/Paywall/PaywallView.swift; sourceTree = "<group>"; };
-		D767937D3F0244AE97C1CF4B /* Kestrel Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kestrel Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D767937D3F0244AE97C1CF4B /* Kestrel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Kestrel.app"; path = Kestrel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A112691A07C85CF0185CB3 /* KestrelComponents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelComponents.swift; path = Shared/Models/KestrelComponents.swift; sourceTree = "<group>"; };
+		DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacImportServersSheet.swift; path = Features/ServerList/MacImportServersSheet.swift; sourceTree = "<group>"; };
 		E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacSettingsView.swift; path = Settings/MacSettingsView.swift; sourceTree = "<group>"; };
 		EFF60EF62FC579DAD3FFB38E /* KestrelFonts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelFonts.swift; path = Shared/Models/KestrelFonts.swift; sourceTree = "<group>"; };
 		F0942090A453E295BC08251A /* MacComponents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacComponents.swift; path = Components/MacComponents.swift; sourceTree = "<group>"; };
 		FEBF1A9F5C11BDAD7001D5BE /* MacCommandLibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacCommandLibraryView.swift; path = Features/Commands/MacCommandLibraryView.swift; sourceTree = "<group>"; };
-		BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerImportService.swift; path = Shared/Services/ServerImportService.swift; sourceTree = "<group>"; };
-		DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacImportServersSheet.swift; path = Features/ServerList/MacImportServersSheet.swift; sourceTree = "<group>"; };
 		FF60718293A4B5C6D7E8F901 /* MacVNCView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacVNCView.swift; path = Features/VNC/MacVNCView.swift; sourceTree = "<group>"; };
-		2260718293A4B5C6D7E8F903 /* MacRDPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacRDPView.swift; path = Features/RDP/MacRDPView.swift; sourceTree = "<group>"; };
-		4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacMultiExecView.swift; path = Features/MultiExec/MacMultiExecView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +128,7 @@
 				2775BBEB2F8C3295008678FA /* Citadel in Frameworks */,
 				EEE484B746E25AC2E67C301E /* Cocoa.framework in Frameworks */,
 				0D84CD0CFD1E155187E5FEBA /* RevenueCat in Frameworks */,
+				271EB9932FA382B800665375 /* StoreKit.framework in Frameworks */,
 				1985CB19F33D4665974B74E8 /* SwiftTerm in Frameworks */,
 				6280A5B35D76B2752D3263B5 /* Supabase in Frameworks */,
 			);
@@ -179,9 +190,21 @@
 			path = KestrelMac;
 			sourceTree = "<group>";
 		};
+		274397BA2FB3C0D500BC9E24 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				274397B62FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf */,
+				274397B72FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf */,
+				274397B82FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf */,
+				274397B92FB3C0D500BC9E24 /* JetBrainsMono-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		279E39292F88EBFD0016E4E5 = {
 			isa = PBXGroup;
 			children = (
+				274397BA2FB3C0D500BC9E24 /* Fonts */,
 				279E39332F88EBFD0016E4E5 /* Products */,
 				E211DE5EC7D9016CB64F3E4B /* Frameworks */,
 				00BC38A882DCB5178EC46D2C /* KestrelMac */,
@@ -191,7 +214,7 @@
 		279E39332F88EBFD0016E4E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D767937D3F0244AE97C1CF4B /* Kestrel Mac.app */,
+				D767937D3F0244AE97C1CF4B /* Kestrel.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -207,6 +230,7 @@
 		E211DE5EC7D9016CB64F3E4B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				271EB9922FA382B800665375 /* StoreKit.framework */,
 				344F6AE37C99B6C747843191 /* OS X */,
 			);
 			name = Frameworks;
@@ -215,9 +239,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		852AA93AA51F11E3140BBDB5 /* Kestrel Mac */ = {
+		852AA93AA51F11E3140BBDB5 /* Kestrel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 171EB25E0708C86DBBF19AE9 /* Build configuration list for PBXNativeTarget "Kestrel Mac" */;
+			buildConfigurationList = 171EB25E0708C86DBBF19AE9 /* Build configuration list for PBXNativeTarget "Kestrel" */;
 			buildPhases = (
 				0B016E5E4484517FE8D1A8F9 /* Sources */,
 				112F46366689C0FA1F4F7BE7 /* Frameworks */,
@@ -227,15 +251,15 @@
 			);
 			dependencies = (
 			);
-			name = "Kestrel Mac";
+			name = "Kestrel";
 			packageProductDependencies = (
 				2FA7BA56880C65B82BDD7E64 /* RevenueCat */,
 				DE496F65C74BA52C97FB3DC0 /* SwiftTerm */,
 				14FC7C2CD0FC462FD42C5574 /* Supabase */,
 				2775BBEA2F8C3295008678FA /* Citadel */,
 			);
-			productName = "Kestrel Mac";
-			productReference = D767937D3F0244AE97C1CF4B /* Kestrel Mac.app */;
+			productName = "Kestrel";
+			productReference = D767937D3F0244AE97C1CF4B /* Kestrel.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -253,7 +277,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "Kestrel MacOS" */;
+			buildConfigurationList = 279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "KestrelOS" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -273,7 +297,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				852AA93AA51F11E3140BBDB5 /* Kestrel Mac */,
+				852AA93AA51F11E3140BBDB5 /* Kestrel */,
 			);
 		};
 /* End PBXProject section */
@@ -284,6 +308,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				37168FCE381D5FEEBEE75632 /* Assets.xcassets in Resources */,
+				274397BB2FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf in Resources */,
+				274397BC2FB3C0D500BC9E24 /* JetBrainsMono-Regular.ttf in Resources */,
+				274397BD2FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf in Resources */,
+				274397BE2FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,13 +380,16 @@
 				CODE_SIGN_ENTITLEMENTS = KestrelMac/KestrelMac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6WLRKM68KD;
+				CURRENT_PROJECT_VERSION = 4;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = RC45VZ228R;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KestrelMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kestrel;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -366,8 +397,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.kestrel.mac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.getosprey.kestrel;
+				PRODUCT_NAME = Kestrel;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -409,6 +440,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6WLRKM68KD;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -429,11 +461,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -473,6 +506,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6WLRKM68KD;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -487,10 +521,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -503,13 +538,16 @@
 				CODE_SIGN_ENTITLEMENTS = KestrelMac/KestrelMac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6WLRKM68KD;
+				CURRENT_PROJECT_VERSION = 4;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = RC45VZ228R;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KestrelMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kestrel;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -517,8 +555,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.kestrel.mac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.getosprey.kestrel;
+				PRODUCT_NAME = Kestrel;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -529,7 +567,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		171EB25E0708C86DBBF19AE9 /* Build configuration list for PBXNativeTarget "Kestrel Mac" */ = {
+		171EB25E0708C86DBBF19AE9 /* Build configuration list for PBXNativeTarget "Kestrel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24014C114B758DF766092509 /* Release */,
@@ -538,7 +576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "Kestrel MacOS" */ = {
+		279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "KestrelOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E393B2F88EBFE0016E4E5 /* Debug */,

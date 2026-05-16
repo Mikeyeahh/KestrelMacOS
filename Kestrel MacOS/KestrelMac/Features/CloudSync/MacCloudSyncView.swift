@@ -89,6 +89,21 @@ struct MacCloudSyncView: View {
                 await serverRepository.loadFromCloud()
             }
         }
+        .alert(
+            "Authentication",
+            isPresented: Binding(
+                get: { supabaseService.authSuccessMessage != nil },
+                set: { if !$0 { supabaseService.authSuccessMessage = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {
+                supabaseService.authSuccessMessage = nil
+            }
+        } message: {
+            if let message = supabaseService.authSuccessMessage {
+                Text(message)
+            }
+        }
     }
 
     // MARK: - Sign In Section
@@ -115,11 +130,13 @@ struct MacCloudSyncView: View {
                     .textFieldStyle(.roundedBorder)
                     .textContentType(.emailAddress)
                     .frame(maxWidth: 300)
+                    .onSubmit(submitSignIn)
 
                 SecureField("Password", text: $signInPassword)
                     .textFieldStyle(.roundedBorder)
                     .textContentType(.password)
                     .frame(maxWidth: 300)
+                    .onSubmit(submitSignIn)
 
                 if let authError {
                     Text(authError)
@@ -168,6 +185,12 @@ struct MacCloudSyncView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func submitSignIn() {
+        guard !signInEmail.isEmpty, !signInPassword.isEmpty,
+              !isSigningIn, !isSigningUp else { return }
+        performSignIn()
     }
 
     private func performSignIn() {
@@ -572,62 +595,67 @@ struct MacCloudSyncView: View {
     // MARK: - Data Management
 
     private var dataManagementSection: some View {
-        DisclosureGroup {
-            VStack(alignment: .leading, spacing: 10) {
-                Button {
-                    showingImportSheet = true
-                } label: {
-                    Label("Import servers from other apps", systemImage: "square.and.arrow.down")
-                        .font(KestrelFonts.mono(11))
-                        .foregroundStyle(KestrelColors.textMuted)
-                }
-                .buttonStyle(.plain)
-
-                Button {
-                    Task {
-                        if let data = try? await supabaseService.exportAllData() {
-                            let panel = NSSavePanel()
-                            panel.nameFieldStringValue = "kestrel-export.json"
-                            panel.allowedContentTypes = [.json]
-                            panel.begin { response in
-                                if response == .OK, let url = panel.url {
-                                    try? data.write(to: url)
-                                }
-                            }
-                        }
-                    }
-                } label: {
-                    Label("Export all data as JSON", systemImage: "arrow.down.doc")
-                        .font(KestrelFonts.mono(11))
-                        .foregroundStyle(KestrelColors.textMuted)
-                }
-                .buttonStyle(.plain)
-
-                Button {
-                    supabaseService.clearLocalCache()
-                } label: {
-                    Label("Clear local cache", systemImage: "trash")
-                        .font(KestrelFonts.mono(11))
-                        .foregroundStyle(KestrelColors.textMuted)
-                }
-                .buttonStyle(.plain)
-
-                Button {
-                    showingDeleteAccount = true
-                } label: {
-                    Label("Delete account", systemImage: "person.crop.circle.badge.minus")
-                        .font(KestrelFonts.mono(11))
-                        .foregroundStyle(KestrelColors.red)
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(.top, 8)
-        } label: {
+        VStack(alignment: .leading, spacing: 10) {
             Text("Data & Privacy")
                 .font(KestrelFonts.monoBold(12))
                 .foregroundStyle(KestrelColors.textPrimary)
+
+            Button {
+                showingImportSheet = true
+            } label: {
+                Label("Import servers from other apps", systemImage: "square.and.arrow.down")
+                    .font(KestrelFonts.mono(11))
+                    .foregroundStyle(KestrelColors.textMuted)
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                Task {
+                    if let data = try? await supabaseService.exportAllData() {
+                        let panel = NSSavePanel()
+                        panel.nameFieldStringValue = "kestrel-export.json"
+                        panel.allowedContentTypes = [.json]
+                        panel.begin { response in
+                            if response == .OK, let url = panel.url {
+                                try? data.write(to: url)
+                            }
+                        }
+                    }
+                }
+            } label: {
+                Label("Export all data as JSON", systemImage: "arrow.down.doc")
+                    .font(KestrelFonts.mono(11))
+                    .foregroundStyle(KestrelColors.textMuted)
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                supabaseService.clearLocalCache()
+            } label: {
+                Label("Clear local cache", systemImage: "trash")
+                    .font(KestrelFonts.mono(11))
+                    .foregroundStyle(KestrelColors.textMuted)
+            }
+            .buttonStyle(.plain)
+
+            Divider()
+                .padding(.vertical, 4)
+
+            Button {
+                showingDeleteAccount = true
+            } label: {
+                Label("Delete Account", systemImage: "person.crop.circle.badge.minus")
+                    .font(KestrelFonts.monoBold(12))
+                    .foregroundStyle(KestrelColors.red)
+            }
+            .buttonStyle(.plain)
+
+            Text("Permanently deletes your account and all synced data from Kestrel Cloud. This action cannot be undone.")
+                .font(KestrelFonts.mono(10))
+                .foregroundStyle(KestrelColors.textFaint)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .tint(KestrelColors.textMuted)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
         .background(KestrelColors.backgroundCard)
         .clipShape(RoundedRectangle(cornerRadius: 10))

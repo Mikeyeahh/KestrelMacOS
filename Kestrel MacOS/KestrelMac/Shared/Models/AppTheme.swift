@@ -13,9 +13,9 @@ import SwiftUI
 enum AppThemeID: String, CaseIterable, Identifiable {
     case phosphor = "Phosphor"
     case midnight = "Midnight"
-    case amber = "Amber"
     case dracula = "Dracula"
     case arctic = "Arctic"
+    case ember = "Ember"
 
     var id: String { rawValue }
     var theme: AppTheme { AppTheme.named(self) }
@@ -24,9 +24,9 @@ enum AppThemeID: String, CaseIterable, Identifiable {
         switch self {
         case .phosphor: "terminal"
         case .midnight: "moon.stars"
-        case .amber: "sun.dust"
         case .dracula: "moon"
         case .arctic: "snowflake"
+        case .ember: "flame"
         }
     }
 }
@@ -47,6 +47,10 @@ struct AppTheme {
     let textPrimary: Color
     let textMuted: Color
     let textFaint: Color
+    /// Optional bundled mono font family name. When non-nil and the font is
+    /// installed, `KestrelFonts.mono(_:)` will use it instead of the system
+    /// monospaced design.
+    var monoFontName: String? = nil
 
     static func named(_ id: AppThemeID) -> AppTheme {
         switch id {
@@ -55,6 +59,7 @@ struct AppTheme {
         case .amber:     return amberTheme
         case .dracula:   return dracula
         case .arctic:    return arctic
+        case .ember:     return ember
         }
     }
 
@@ -128,6 +133,25 @@ struct AppTheme {
         textPrimary:         Color(red: 0.973, green: 0.973, blue: 0.949),
         textMuted:           Color(red: 0.973, green: 0.973, blue: 0.949).opacity(0.7),
         textFaint:           Color(red: 0.973, green: 0.973, blue: 0.949).opacity(0.45)
+    )
+
+    // MARK: - Ember (warm onyx + amber)
+
+    private static let ember = AppTheme(
+        accent:              Color(red: 0.910, green: 0.659, blue: 0.220),   // #E8A838
+        accentDim:           Color(red: 0.910, green: 0.659, blue: 0.220).opacity(0.15),
+        background:          Color(red: 0.055, green: 0.055, blue: 0.055),   // #0E0E0E
+        backgroundCard:      Color(red: 0.098, green: 0.098, blue: 0.098),   // #191919
+        backgroundCardAccent: Color(red: 0.910, green: 0.659, blue: 0.220).opacity(0.06),
+        cardBorder:          Color(red: 0.180, green: 0.180, blue: 0.180),   // #2E2E2E
+        cardBorderAccent:    Color(red: 0.910, green: 0.659, blue: 0.220).opacity(0.35),
+        amber:               Color(red: 0.910, green: 0.659, blue: 0.220),
+        red:                 Color(red: 0.973, green: 0.443, blue: 0.443),   // #F87171
+        blue:                Color(red: 0.514, green: 0.831, blue: 0.976),
+        textPrimary:         Color(red: 0.878, green: 0.867, blue: 0.835),   // #E0DDD5 cream
+        textMuted:           Color(red: 0.533, green: 0.533, blue: 0.533),   // #888888
+        textFaint:           Color(red: 0.533, green: 0.533, blue: 0.533).opacity(0.6),
+        monoFontName:        "JetBrainsMono-Regular"
     )
 
     // MARK: - Arctic

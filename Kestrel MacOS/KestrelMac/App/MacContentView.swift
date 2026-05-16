@@ -30,7 +30,7 @@ struct MacContentView: View {
                 selectedServer: $selectedServer,
                 activeView: $activeView
             )
-            .navigationSplitViewColumnWidth(min: 180, ideal: 210, max: 240)
+            .navigationSplitViewColumnWidth(min: 180, ideal: 240, max: 500)
         } detail: {
             detailContent
         }
@@ -189,12 +189,11 @@ struct MacContentView: View {
 
     private func serverTab(_ server: Server) -> some View {
         let isActive = server.id == activeOpenServerID
-        let isConnected = sessionManager.activeSession(for: server.id)?.isConnected ?? false
 
         return HStack(spacing: 6) {
-            Circle()
-                .fill(isConnected ? KestrelColors.phosphorGreen : KestrelColors.red)
-                .frame(width: 6, height: 6)
+            ServerTabConnectionDot(
+                session: sessionManager.activeSession(for: server.id)
+            )
 
             Text(server.name)
                 .font(KestrelFonts.mono(11))
@@ -243,5 +242,17 @@ struct MacContentView: View {
             selectedServer = server
             activeView = .terminal(server)
         }
+    }
+}
+
+// Reads the live SSH session state via Observation so the open-tab dot
+// flips red→green the moment the session reaches `.connected`.
+private struct ServerTabConnectionDot: View {
+    let session: SSHSession?
+
+    var body: some View {
+        Circle()
+            .fill(session?.isConnected == true ? KestrelColors.phosphorGreen : KestrelColors.red)
+            .frame(width: 6, height: 6)
     }
 }

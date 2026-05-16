@@ -39,6 +39,12 @@ struct MacServerSidebarView: View {
     @State private var showingAddSheet = false
     @State private var groupToDelete: ServerGroup?
     @State private var showingDeleteGroup = false
+    @State private var showingPaywall = false
+    @State private var showingNewGroupAlert = false
+    @State private var newGroupName = ""
+    @State private var newGroupError: String?
+    @State private var groupForColorEdit: ServerGroup?
+    @State private var pendingGroupColor: Color = KestrelColors.phosphorGreen
 
     // MARK: - Filtered Servers
 
@@ -134,16 +140,83 @@ struct MacServerSidebarView: View {
         .sheet(isPresented: $showingAddSheet) {
             MacEditServerSheet()
         }
+        .sheet(isPresented: $showingPaywall) {
+            MacPaywallView()
+        }
+        .sheet(item: $groupForColorEdit) { group in
+            GroupColorEditor(
+                groupName: group.name,
+                color: $pendingGroupColor,
+                onSave: {
+                    saveGroupColor(group, color: pendingGroupColor)
+                    groupForColorEdit = nil
+                },
+                onCancel: { groupForColorEdit = nil }
+            )
+        }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    showingAddSheet = true
+                    newGroupName = ""
+                    newGroupError = nil
+                    showingNewGroupAlert = true
+                } label: {
+                    Image(systemName: "folder.badge.plus")
+                }
+                .help("New Group")
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    if !revenueCatService.isProOrBundle && serverRepository.servers.count >= RevenueCatService.freeServerLimit {
+                        showingPaywall = true
+                    } else {
+                        showingAddSheet = true
+                    }
                 } label: {
                     Image(systemName: "plus")
                 }
                 .help("Add Server")
             }
         }
+        .alert("New Group", isPresented: $showingNewGroupAlert) {
+            TextField("Group name", text: $newGroupName)
+            Button("Create") { createNewGroup() }
+            Button("Cancel", role: .cancel) {
+                newGroupName = ""
+                newGroupError = nil
+            }
+        } message: {
+            if let newGroupError {
+                Text(newGroupError)
+            } else {
+                Text("Enter a name for the new group.")
+            }
+        }
+    }
+
+    // MARK: - New Group
+
+    private func createNewGroup() {
+        let trimmed = newGroupName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            newGroupError = "Group name cannot be empty."
+            showingNewGroupAlert = true
+            return
+        }
+        let exists = serverRepository.groups.contains {
+            $0.name.caseInsensitiveCompare(trimmed) == .orderedSame
+        }
+        guard !exists else {
+            newGroupError = "A group named \"\(trimmed)\" already exists."
+            showingNewGroupAlert = true
+            return
+        }
+        let nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
+        withAnimation(.snappy) {
+            serverRepository.addGroup(ServerGroup(name: trimmed, orderIndex: nextOrder))
+        }
+        newGroupName = ""
+        newGroupError = nil
     }
 
     // MARK: - Server List
@@ -165,6 +238,9 @@ struct MacServerSidebarView: View {
                     serverRows(ungrouped, group: nil)
                 } header: {
                     MacSidebarSectionHeader(title: "Ungrouped")
+                        .onDrop(of: [.text], isTargeted: nil) { providers in
+                            handleGroupDrop(providers, targetGroup: nil)
+                        }
                 }
             }
 
@@ -257,14 +333,27 @@ struct MacServerSidebarView: View {
             Section {
                 serverRows(groupServers, group: group.name)
             } header: {
-                MacSidebarSectionHeader(title: group.name)
+                MacSidebarSectionHeader(
+                    title: group.name,
+                    accentColor: Color(hex: group.colour)
+                )
                     .contextMenu {
+                        Button {
+                            pendingGroupColor = Color(hex: group.colour) ?? KestrelColors.phosphorGreen
+                            groupForColorEdit = group
+                        } label: {
+                            Label("Change Color…", systemImage: "paintpalette")
+                        }
+                        Divider()
                         Button(role: .destructive) {
                             groupToDelete = group
                             showingDeleteGroup = true
                         } label: {
                             Label("Delete Group", systemImage: "trash")
                         }
+                    }
+                    .onDrop(of: [.text], isTargeted: nil) { providers in
+                        handleGroupDrop(providers, targetGroup: group.name)
                     }
             }
         }
@@ -295,9 +384,41 @@ struct MacServerSidebarView: View {
             .onDrag {
                 NSItemProvider(object: server.id.uuidString as NSString)
             }
+            .onDrop(of: [.text], isTargeted: nil) { providers in
+                handleGroupDrop(providers, targetGroup: group)
+            }
         }
         .onMove { source, destination in
             serverRepository.moveServer(from: source, to: destination, inGroup: group)
+        }
+    }
+
+    // MARK: - Cross-Group Drop
+
+    private func handleGroupDrop(_ providers: [NSItemProvider], targetGroup: String?) -> Bool {
+        var accepted = false
+        for provider in providers where provider.canLoadObject(ofClass: NSString.self) {
+            accepted = true
+            _ = provider.loadObject(ofClass: NSString.self) { object, _ in
+                guard let idString = object as? String,
+                      let uuid = UUID(uuidString: idString) else { return }
+                Task { @MainActor in
+                    moveServer(id: uuid, toGroup: targetGroup)
+                }
+            }
+        }
+        return accepted
+    }
+
+    private func moveServer(id: UUID, toGroup target: String?) {
+        guard var server = serverRepository.servers.first(where: { $0.id == id }) else { return }
+        let trimmed = target?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let newGroup: String? = (trimmed?.isEmpty == false) ? trimmed : nil
+        if server.group == newGroup { return }
+        server.group = newGroup
+        server.updatedAt = .now
+        withAnimation(.snappy) {
+            serverRepository.updateServer(server)
         }
     }
 
@@ -404,6 +525,35 @@ struct MacServerSidebarView: View {
             Divider()
                 .overlay(KestrelColors.cardBorder)
 
+            if !revenueCatService.isProOrBundle {
+                Button {
+                    showingPaywall = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 12))
+                            .foregroundStyle(KestrelColors.phosphorGreen)
+
+                        Text("Upgrade to Pro")
+                            .font(KestrelFonts.mono(11))
+                            .foregroundStyle(KestrelColors.textPrimary)
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 10))
+                            .foregroundStyle(KestrelColors.textFaint)
+                    }
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+
+                Divider()
+                    .overlay(KestrelColors.cardBorder)
+            }
+
             // User account row
             SettingsLink {
                 HStack(spacing: 8) {
@@ -452,6 +602,16 @@ struct MacServerSidebarView: View {
         .background(KestrelColors.background)
     }
 
+    // MARK: - Group Color
+
+    private func saveGroupColor(_ group: ServerGroup, color: Color) {
+        var updated = group
+        updated.colour = color.toHex()
+        withAnimation(.snappy) {
+            serverRepository.updateGroup(updated)
+        }
+    }
+
     // MARK: - Group Deletion
 
     private func deleteGroup(_ group: ServerGroup, includeServers: Bool) {
@@ -480,7 +640,7 @@ struct MacServerSidebarView: View {
 struct MacServerRow: View {
     let server: Server
     let isSelected: Bool
-    let sessionManager: SSHSessionManager
+    @ObservedObject var sessionManager: SSHSessionManager
 
     private var pingMs: Int? {
         sessionManager.statsEngine(for: server.id)?.stats?.pingMs
@@ -509,9 +669,12 @@ struct MacServerRow: View {
                 .fill(isSelected ? KestrelColors.phosphorGreen : Color.clear)
                 .frame(width: 2, height: 22)
 
-            // Reuse shared StatusDot component
-            StatusDot(status: server.status)
-                .scaleEffect(0.85)
+            // Observes the live SSH session so the dot flips red→green on connect.
+            LiveServerStatusDot(
+                session: sessionManager.activeSession(for: server.id),
+                fallback: server.status
+            )
+            .scaleEffect(0.85)
 
             // Protocol icon
             Image(systemName: protocolIcon)
@@ -550,5 +713,76 @@ struct MacServerRow: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(server.name), \(server.status.accessibilityLabel), \(server.serverEnvironment.displayName)")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+}
+
+// MARK: - Group Color Editor
+
+private struct GroupColorEditor: View {
+    let groupName: String
+    @Binding var color: Color
+    let onSave: () -> Void
+    let onCancel: () -> Void
+
+    private let presets: [String] = [
+        "#00FF9C", // phosphor green
+        "#FFB800", // amber
+        "#FF3B5C", // red
+        "#00C8FF", // blue
+        "#B380FF", // violet
+        "#FF7A45", // orange
+        "#9CA3AF"  // grey
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Group Color")
+                .font(KestrelFonts.display(15, weight: .bold))
+                .foregroundStyle(KestrelColors.textPrimary)
+
+            Text(groupName)
+                .font(KestrelFonts.mono(11))
+                .foregroundStyle(KestrelColors.textMuted)
+
+            HStack(spacing: 8) {
+                ForEach(presets, id: \.self) { hex in
+                    let presetColor = Color(hex: hex) ?? KestrelColors.phosphorGreen
+                    Button {
+                        color = presetColor
+                    } label: {
+                        Circle()
+                            .fill(presetColor)
+                            .frame(width: 22, height: 22)
+                            .overlay(
+                                Circle()
+                                    .strokeBorder(
+                                        color.toHex().caseInsensitiveCompare(hex) == .orderedSame
+                                            ? KestrelColors.textPrimary
+                                            : Color.clear,
+                                        lineWidth: 2
+                                    )
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .help(hex)
+                }
+            }
+
+            ColorPicker("Custom", selection: $color, supportsOpacity: false)
+                .font(KestrelFonts.mono(11))
+
+            HStack {
+                Spacer()
+                Button("Cancel", role: .cancel) { onCancel() }
+                    .keyboardShortcut(.cancelAction)
+                Button("Save") { onSave() }
+                    .buttonStyle(.borderedProminent)
+                    .tint(KestrelColors.phosphorGreen)
+                    .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(20)
+        .frame(width: 320)
+        .background(KestrelColors.background)
     }
 }

@@ -9,14 +9,18 @@ import SwiftUI
 import AppKit
 
 extension KestrelFonts {
-    /// Terminal monospaced font — prefers SF Mono, falls back to Menlo.
-    /// If you bundle Cascadia Code, it will be tried first.
+    /// Terminal monospaced font — follows the active theme's `monoFontName`
+    /// when available (e.g. JetBrains Mono for the Termio theme), otherwise
+    /// prefers Cascadia Code, then SF Mono, then Menlo.
     static func systemMono(_ size: CGFloat) -> Font {
-        // Attempt Cascadia Code (only if bundled), then SF Mono, then Menlo
-        if let _ = NSFont(name: "CascadiaCode-Regular", size: size) {
+        if let name = ThemeManager.shared.current.monoFontName,
+           NSFont(name: name, size: size) != nil {
+            return .custom(name, size: size)
+        }
+        if NSFont(name: "CascadiaCode-Regular", size: size) != nil {
             return .custom("CascadiaCode-Regular", size: size)
         }
-        if let _ = NSFont(name: "SFMono-Regular", size: size) {
+        if NSFont(name: "SFMono-Regular", size: size) != nil {
             return .custom("SFMono-Regular", size: size)
         }
         return .custom("Menlo", size: size)

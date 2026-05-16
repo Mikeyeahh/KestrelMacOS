@@ -38,8 +38,11 @@ struct MacSettingsView: View {
 
             NotificationSettingsTab()
                 .tabItem { Label("Alerts", systemImage: "bell") }
+
+            AboutSettingsTab()
+                .tabItem { Label("About", systemImage: "info.circle") }
         }
-        .frame(width: 500, height: 460)
+        .frame(minWidth: 720, idealWidth: 760, minHeight: 520, idealHeight: 600)
         .background {
             SettingsWindowStyler()
         }
@@ -224,7 +227,8 @@ struct GeneralSettingsTab: View {
 struct TerminalSettingsTab: View {
     @AppStorage("mac.terminal.fontSize") private var fontSize: Double = 12
     @AppStorage("mac.terminal.fontName") private var fontName = "SFMono-Regular"
-    @AppStorage("mac.terminal.colorScheme") private var colorScheme = "Kestrel"
+    @AppStorage("mac.terminal.colorScheme") private var colorScheme = TerminalColorScheme.matchAppThemeID
+    @AppStorage("app.theme") private var appThemeRaw = AppThemeID.phosphor.rawValue
     @AppStorage("mac.terminal.cursorStyle") private var cursorStyle = "block"
     @AppStorage("mac.terminal.scrollbackLines") private var scrollbackLines = 10000
     @AppStorage("mac.terminal.optionAsMeta") private var optionAsMeta = true
@@ -234,7 +238,11 @@ struct TerminalSettingsTab: View {
     private let fontLabels = ["SF Mono", "Menlo", "Cascadia Code", "Monaco"]
 
     private var currentScheme: TerminalColorScheme {
-        TerminalColorScheme(rawValue: colorScheme) ?? .kestrel
+        if colorScheme == TerminalColorScheme.matchAppThemeID {
+            let id = AppThemeID(rawValue: appThemeRaw) ?? .phosphor
+            return .forAppTheme(id)
+        }
+        return TerminalColorScheme(rawValue: colorScheme) ?? .kestrel
     }
 
     var body: some View {
@@ -274,6 +282,15 @@ struct TerminalSettingsTab: View {
 
             Section("Appearance") {
                 Picker("Colour Scheme:", selection: $colorScheme) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "paintpalette")
+                            .frame(width: 16, height: 16)
+                        Text("Match App Theme")
+                    }
+                    .tag(TerminalColorScheme.matchAppThemeID)
+
+                    Divider()
+
                     ForEach(TerminalColorScheme.allCases, id: \.rawValue) { scheme in
                         HStack(spacing: 6) {
                             RoundedRectangle(cornerRadius: 3)
@@ -519,20 +536,34 @@ struct SyncSettingsTab: View {
     @AppStorage("settings.syncFrequency") private var syncFrequency = "realtime"
     @AppStorage("settings.conflictResolution") private var conflictResolution = "latest"
     @State private var showingSignOut = false
+    @State private var showingPaywall = false
 
     var body: some View {
         Form {
             Section("Account") {
                 if supabaseService.isAuthenticated {
                     LabeledContent("Email", value: supabaseService.userEmail ?? "—")
-                    LabeledContent("Plan", value: revenueCatService.planName)
-
-                    Button("Sign Out", role: .destructive) {
-                        showingSignOut = true
-                    }
                 } else {
                     Text("Not signed in")
                         .foregroundStyle(.secondary)
+                }
+
+                LabeledContent("Plan", value: revenueCatService.planName)
+
+                if revenueCatService.isProOrBundle {
+                    if let url = revenueCatService.manageSubscriptionURL {
+                        Link("Manage Subscription", destination: url)
+                    }
+                } else {
+                    Button("Upgrade to Pro") {
+                        showingPaywall = true
+                    }
+                }
+
+                if supabaseService.isAuthenticated {
+                    Button("Sign Out", role: .destructive) {
+                        showingSignOut = true
+                    }
                 }
             }
 
@@ -572,6 +603,9 @@ struct SyncSettingsTab: View {
                 Task { try? await supabaseService.signOut() }
             }
             Button("Cancel", role: .cancel) {}
+        }
+        .sheet(isPresented: $showingPaywall) {
+            MacPaywallView()
         }
     }
 }
@@ -672,6 +706,26 @@ struct NotificationSettingsTab: View {
                     }
                     .frame(width: 90)
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Tab 8: About
+
+struct AboutSettingsTab: View {
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+
+    var body: some View {
+        Form {
+            Section {
+                LabeledContent("Version", value: appVersion)
+            }
+
+            Section {
+                Link("Send Feedback", destination: URL(string: "mailto:support@getosprey.app?subject=Kestrel%20Mac%20Feedback")!)
             }
         }
     }

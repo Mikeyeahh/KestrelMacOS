@@ -13,9 +13,10 @@ import SwiftUI
 enum AppThemeID: String, CaseIterable, Identifiable {
     case phosphor = "Phosphor"
     case midnight = "Midnight"
-    case amber = "Amber"
     case dracula = "Dracula"
     case arctic = "Arctic"
+    case ember = "Ember"
+    case mono = "Mono"
 
     var id: String { rawValue }
     var theme: AppTheme { AppTheme.named(self) }
@@ -24,9 +25,10 @@ enum AppThemeID: String, CaseIterable, Identifiable {
         switch self {
         case .phosphor: "terminal"
         case .midnight: "moon.stars"
-        case .amber: "sun.dust"
         case .dracula: "moon"
         case .arctic: "snowflake"
+        case .ember: "flame"
+        case .mono: "circle.lefthalf.filled"
         }
     }
 }
@@ -47,27 +49,32 @@ struct AppTheme {
     let textPrimary: Color
     let textMuted: Color
     let textFaint: Color
+    /// Optional bundled mono font family name. When non-nil and the font is
+    /// installed, `KestrelFonts.mono(_:)` will use it instead of the system
+    /// monospaced design.
+    var monoFontName: String? = nil
 
     static func named(_ id: AppThemeID) -> AppTheme {
         switch id {
         case .phosphor:  return phosphor
         case .midnight:  return midnight
-        case .amber:     return amberTheme
         case .dracula:   return dracula
         case .arctic:    return arctic
+        case .ember:     return ember
+        case .mono:      return mono
         }
     }
 
     // MARK: - Phosphor (Default — matches original hardcoded values)
 
     private static let phosphor = AppTheme(
-        accent:              Color(red: 0, green: 1, blue: 0.255),
-        accentDim:           Color(red: 0, green: 1, blue: 0.255).opacity(0.15),
-        background:          Color(red: 0, green: 0, blue: 0),
+        accent:              Color(red: 0, green: 1, blue: 0.612),
+        accentDim:           Color(red: 0, green: 1, blue: 0.612).opacity(0.15),
+        background:          Color(red: 0.031, green: 0.047, blue: 0.078),
         backgroundCard:      Color.white.opacity(0.04),
-        backgroundCardAccent: Color(red: 0, green: 1, blue: 0.255).opacity(0.04),
+        backgroundCardAccent: Color(red: 0, green: 1, blue: 0.612).opacity(0.04),
         cardBorder:          Color.white.opacity(0.07),
-        cardBorderAccent:    Color(red: 0, green: 1, blue: 0.255).opacity(0.18),
+        cardBorderAccent:    Color(red: 0, green: 1, blue: 0.612).opacity(0.18),
         amber:               Color(red: 1, green: 0.722, blue: 0),
         red:                 Color(red: 1, green: 0.231, blue: 0.361),
         blue:                Color(red: 0, green: 0.784, blue: 1),
@@ -94,24 +101,6 @@ struct AppTheme {
         textFaint:           Color.white.opacity(0.45)
     )
 
-    // MARK: - Amber
-
-    private static let amberTheme = AppTheme(
-        accent:              Color(red: 1, green: 0.722, blue: 0),
-        accentDim:           Color(red: 1, green: 0.722, blue: 0).opacity(0.15),
-        background:          Color(red: 0.051, green: 0.039, blue: 0),
-        backgroundCard:      Color.white.opacity(0.04),
-        backgroundCardAccent: Color(red: 1, green: 0.722, blue: 0).opacity(0.04),
-        cardBorder:          Color.white.opacity(0.07),
-        cardBorderAccent:    Color(red: 1, green: 0.722, blue: 0).opacity(0.18),
-        amber:               Color(red: 1, green: 0.584, blue: 0),
-        red:                 Color(red: 1, green: 0.231, blue: 0.361),
-        blue:                Color(red: 0, green: 0.784, blue: 1),
-        textPrimary:         Color.white,
-        textMuted:           Color.white.opacity(0.7),
-        textFaint:           Color.white.opacity(0.45)
-    )
-
     // MARK: - Dracula
 
     private static let dracula = AppTheme(
@@ -130,6 +119,25 @@ struct AppTheme {
         textFaint:           Color(red: 0.973, green: 0.973, blue: 0.949).opacity(0.45)
     )
 
+    // MARK: - Ember (warm onyx + amber)
+
+    private static let ember = AppTheme(
+        accent:              Color(red: 0.910, green: 0.659, blue: 0.220),   // #E8A838
+        accentDim:           Color(red: 0.910, green: 0.659, blue: 0.220).opacity(0.15),
+        background:          Color(red: 0.055, green: 0.055, blue: 0.055),   // #0E0E0E
+        backgroundCard:      Color(red: 0.098, green: 0.098, blue: 0.098),   // #191919
+        backgroundCardAccent: Color(red: 0.910, green: 0.659, blue: 0.220).opacity(0.06),
+        cardBorder:          Color(red: 0.180, green: 0.180, blue: 0.180),   // #2E2E2E
+        cardBorderAccent:    Color(red: 0.910, green: 0.659, blue: 0.220).opacity(0.35),
+        amber:               Color(red: 0.910, green: 0.659, blue: 0.220),
+        red:                 Color(red: 0.973, green: 0.443, blue: 0.443),   // #F87171
+        blue:                Color(red: 0.514, green: 0.831, blue: 0.976),
+        textPrimary:         Color(red: 0.878, green: 0.867, blue: 0.835),   // #E0DDD5 cream
+        textMuted:           Color(red: 0.533, green: 0.533, blue: 0.533),   // #888888
+        textFaint:           Color(red: 0.533, green: 0.533, blue: 0.533).opacity(0.6),
+        monoFontName:        "JetBrainsMono-Regular"
+    )
+
     // MARK: - Arctic
 
     private static let arctic = AppTheme(
@@ -143,6 +151,24 @@ struct AppTheme {
         amber:               Color(red: 1, green: 0.722, blue: 0),
         red:                 Color(red: 1, green: 0.231, blue: 0.361),
         blue:                Color(red: 0, green: 0.784, blue: 1),
+        textPrimary:         Color.white,
+        textMuted:           Color.white.opacity(0.7),
+        textFaint:           Color.white.opacity(0.45)
+    )
+
+    // MARK: - Mono (classic black & white terminal)
+
+    private static let mono = AppTheme(
+        accent:              Color.white,
+        accentDim:           Color.white.opacity(0.15),
+        background:          Color.black,
+        backgroundCard:      Color.white.opacity(0.05),
+        backgroundCardAccent: Color.white.opacity(0.08),
+        cardBorder:          Color.white.opacity(0.15),
+        cardBorderAccent:    Color.white.opacity(0.35),
+        amber:               Color.white,
+        red:                 Color.white,
+        blue:                Color.white,
         textPrimary:         Color.white,
         textMuted:           Color.white.opacity(0.7),
         textFaint:           Color.white.opacity(0.45)

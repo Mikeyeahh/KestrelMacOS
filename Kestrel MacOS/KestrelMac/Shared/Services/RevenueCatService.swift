@@ -50,11 +50,24 @@ enum KestrelFeature: String, CaseIterable {
     }
 }
 
+// MARK: - Developer Override
+
+/// Emails that automatically receive Pro access (the developer!).
+private let kestrelDeveloperEmails: Set<String> = [
+    // Add your Supabase login email here (lowercased)
+    "totaladdictionxx@me.com"
+]
+
 // MARK: - RevenueCat Service
 
 @MainActor
 class RevenueCatService: ObservableObject {
     static let shared = RevenueCatService()
+
+    /// Maximum number of servers a free-tier user can have.
+    static let freeServerLimit = 2
+    /// Maximum number of SSH keys a free-tier user can have.
+    static let freeKeyLimit = 3
 
     @Published var isProUser: Bool = false
     @Published var hasSuiteBundle: Bool = false
@@ -73,10 +86,14 @@ class RevenueCatService: ObservableObject {
     private static let proOverrideKey = "kestrel_pro_override"
 
     var isProOrBundle: Bool {
-        isProUser || hasSuiteBundle || proOverride
+        isProUser || hasSuiteBundle || proOverride || isDeveloper
     }
 
+    /// True when the signed-in user matches a developer email.
+    @Published var isDeveloper: Bool = false
+
     var planName: String {
+        if isDeveloper { return "Developer" }
         if hasSuiteBundle { return "Suite Bundle" }
         if isProUser { return "Kestrel Pro" }
         return "Free"
@@ -84,6 +101,21 @@ class RevenueCatService: ObservableObject {
 
     private init() {
         proOverride = UserDefaults.standard.bool(forKey: Self.proOverrideKey)
+        Task {
+            await loadOfferings()
+            await checkEntitlements()
+        }
+    }
+
+    // MARK: - Developer Access
+
+    /// Call after Supabase auth restores to check if this is the developer.
+    func checkDeveloperAccess(email: String?) {
+        guard let email = email?.lowercased() else {
+            isDeveloper = false
+            return
+        }
+        isDeveloper = kestrelDeveloperEmails.contains(email)
     }
 
     // MARK: - Entitlements
@@ -181,4 +213,16 @@ class RevenueCatService: ObservableObject {
     }
 
     func canAccess(_ feature: KestrelFeature) -> Bool { isProOrBundle }
+
+    /// Clears all locally-cached pro state and re-checks entitlements against
+    /// the current App Store account. Call from Supabase sign-out so a stale
+    /// `proOverride` (or developer-email match) can't leak Pro into a new login.
+    func resetForLogout() async {
+        proOverride = false
+        UserDefaults.standard.removeObject(forKey: Self.proOverrideKey)
+        isProUser = false
+        hasSuiteBundle = false
+        isDeveloper = false
+        await checkEntitlements()
+    }
 }

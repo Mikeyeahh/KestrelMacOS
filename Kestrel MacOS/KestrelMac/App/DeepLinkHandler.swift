@@ -107,25 +107,16 @@ class DeepLinkHandler: ObservableObject {
     }
 
     private func handleAuthCallback(_ url: URL) async {
-        let supabase = SupabaseService.shared
-        do {
-            try await supabase.client.auth.session(from: url)
-            let session = try await supabase.client.auth.session
-            supabase.isAuthenticated = true
-            supabase.userEmail = session.user.email
-            supabase.userId = session.user.id
-        } catch {
-            // Auth callback failed — user can still sign in manually
-        }
+        await SupabaseService.shared.handleAuthCallback(url)
     }
 }
 
 // MARK: - Handoff Activity Types
 
 enum KestrelActivityType {
-    static let terminal = "com.yourname.kestrel.terminal"
-    static let dashboard = "com.yourname.kestrel.dashboard"
-    static let files = "com.yourname.kestrel.files"
+    static let terminal = "com.getosprey.kestrel.terminal"
+    static let dashboard = "com.getosprey.kestrel.dashboard"
+    static let files = "com.getosprey.kestrel.files"
 }
 
 // MARK: - Handoff Activity Manager
@@ -220,7 +211,7 @@ class SpotlightIndexer {
 
         let item = CSSearchableItem(
             uniqueIdentifier: server.id.uuidString,
-            domainIdentifier: "com.yourname.kestrel.servers",
+            domainIdentifier: "com.getosprey.kestrel.servers",
             attributeSet: attributes
         )
 
@@ -233,7 +224,7 @@ class SpotlightIndexer {
 
     func reindexAll(servers: [Server]) {
         // Remove all, then re-add
-        CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["com.yourname.kestrel.servers"]) { _ in
+        CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["com.getosprey.kestrel.servers"]) { _ in
             let items = servers.map { server in
                 let attrs = CSSearchableItemAttributeSet(contentType: .content)
                 attrs.title = server.name
@@ -241,7 +232,7 @@ class SpotlightIndexer {
                 attrs.url = URL(string: "kestrel://terminal?serverID=\(server.id)")
                 return CSSearchableItem(
                     uniqueIdentifier: server.id.uuidString,
-                    domainIdentifier: "com.yourname.kestrel.servers",
+                    domainIdentifier: "com.getosprey.kestrel.servers",
                     attributeSet: attrs
                 )
             }

@@ -165,7 +165,7 @@ enum ServerImportService {
                 authMethod: authMethod,
                 group: currentFolder,
                 environment: "other",
-                colour: "#00FF41",
+                colour: "#00FF9C",
                 tags: ["imported", "mobaxterm"],
                 orderIndex: servers.count
             )
@@ -252,7 +252,7 @@ enum ServerImportService {
                 authMethod: authMethod,
                 group: group?.isEmpty == true ? nil : group,
                 environment: "other",
-                colour: "#00FF41",
+                colour: "#00FF9C",
                 tags: tags,
                 orderIndex: servers.count
             )
@@ -343,7 +343,7 @@ enum ServerImportService {
                 username: h.user,
                 authMethod: hasKey ? "privateKey" : "password",
                 environment: "other",
-                colour: "#00FF41",
+                colour: "#00FF9C",
                 tags: ["imported", "ssh-config"],
                 orderIndex: servers.count
             ))
@@ -442,7 +442,7 @@ enum ServerImportService {
                 authMethod: "password",
                 group: group,
                 environment: "other",
-                colour: "#00FF41",
+                colour: "#00FF9C",
                 tags: tags,
                 orderIndex: servers.count
             )
@@ -623,7 +623,7 @@ private class MRemoteNGParser: NSObject, XMLParserDelegate {
             authMethod: "password",
             group: group,
             environment: "other",
-            colour: "#00FF41",
+            colour: "#00FF9C",
             tags: ["imported", "mremoteng"],
             orderIndex: servers.count,
             notes: attributes["Descr"]?.isEmpty == false ? attributes["Descr"] : nil

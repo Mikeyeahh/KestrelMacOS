@@ -19,8 +19,8 @@ struct KestrelMacApp: App {
     @AppStorage("app.theme") private var themeID = "Phosphor"
 
     init() {
-        // Same API key as iOS — replace with your actual key
-        Purchases.configure(withAPIKey: "test_UmfgkdusfhbUIvqLMsTegxkELTI")
+        Purchases.logLevel = .error
+        Purchases.configure(withAPIKey: "appl_NrjcEYMRTSJeVklytqRaAFhQcPm")
     }
 
     var body: some Scene {
@@ -53,8 +53,21 @@ struct KestrelMacApp: App {
                 await serverRepository.loadFromCloud()
                 serverRepository.startAutoSync()
             }
+            .onChange(of: supabaseService.isAuthenticated) { _, isAuthed in
+                if isAuthed {
+                    print("[Sync] Auth flipped to true, syncing now")
+                    Task {
+                        await serverRepository.loadFromCloud()
+                        serverRepository.startAutoSync()
+                    }
+                } else {
+                    print("[Sync] Auth flipped to false, clearing local state")
+                    serverRepository.clearAll()
+                    sshSessionManager.closeAllSessions()
+                }
+            }
         }
-        .defaultSize(width: 1100, height: 700)
+        .defaultSize(width: 1400, height: 900)
         // Deep link handling
         .handlesExternalEvents(matching: ["kestrel", "osprey"])
         // Handoff from iOS

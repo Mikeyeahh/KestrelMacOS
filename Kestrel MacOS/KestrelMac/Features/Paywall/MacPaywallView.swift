@@ -58,7 +58,8 @@ struct MacPaywallView: View {
                 .padding(.bottom, 24)
             }
         }
-        .frame(width: 520, height: 640)
+        .frame(minWidth: 520, idealWidth: 600, maxWidth: 760,
+               minHeight: 600, idealHeight: 700, maxHeight: .infinity)
         .background(KestrelColors.background)
         .alert("Welcome to Kestrel Pro!", isPresented: $purchaseSucceeded) {
             Button("Done") { dismiss() }

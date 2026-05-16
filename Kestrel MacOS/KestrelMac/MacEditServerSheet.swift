@@ -250,6 +250,13 @@ struct MacEditServerSheet: View {
         let vncPort = connectionTypeOption == .vnc ? portNum : nil
         let rdpPort = connectionTypeOption == .rdp ? portNum : nil
 
+        let trimmedGroup = group.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedGroup.isEmpty,
+           !serverRepository.groups.contains(where: { $0.name.caseInsensitiveCompare(trimmedGroup) == .orderedSame }) {
+            let nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
+            serverRepository.addGroup(ServerGroup(name: trimmedGroup, orderIndex: nextOrder))
+        }
+
         if let existing = editingServer {
             var updated = existing
             updated.connectionType = connectionTypeOption.connectionType
