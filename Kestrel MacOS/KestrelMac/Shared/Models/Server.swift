@@ -20,6 +20,11 @@ struct Server: Identifiable, Hashable, Codable {
     var username: String
     var authMethod: String
     var privateKeyID: UUID?
+    /// Canonical group membership — the owning `ServerGroup.id`. Stable
+    /// across group renames. `nil` means the server is ungrouped.
+    var groupId: UUID?
+    /// Legacy group *name*. Kept only so older data still resolves; new
+    /// code groups by `groupId`.
     var group: String?
     var environment: String
     var colour: String
@@ -44,6 +49,7 @@ struct Server: Identifiable, Hashable, Codable {
         case name, host, port, username
         case authMethod = "auth_method"
         case privateKeyID = "private_key_id"
+        case groupId = "group_id"
         case group, environment, colour, tags
         case orderIndex = "order_index"
         case notes
@@ -63,6 +69,7 @@ struct Server: Identifiable, Hashable, Codable {
         username: String,
         authMethod: String = "password",
         privateKeyID: UUID? = nil,
+        groupId: UUID? = nil,
         group: String? = nil,
         environment: String = "other",
         colour: String = "#00FF9C",
@@ -87,6 +94,7 @@ struct Server: Identifiable, Hashable, Codable {
         self.username = username
         self.authMethod = authMethod
         self.privateKeyID = privateKeyID
+        self.groupId = groupId
         self.group = group
         self.environment = environment
         self.colour = colour
@@ -116,6 +124,7 @@ struct Server: Identifiable, Hashable, Codable {
         username = try container.decode(String.self, forKey: .username)
         authMethod = try container.decodeIfPresent(String.self, forKey: .authMethod) ?? "password"
         privateKeyID = try container.decodeIfPresent(UUID.self, forKey: .privateKeyID)
+        groupId = try container.decodeIfPresent(UUID.self, forKey: .groupId)
         group = try container.decodeIfPresent(String.self, forKey: .group)
         environment = try container.decodeIfPresent(String.self, forKey: .environment) ?? "other"
         colour = try container.decodeIfPresent(String.self, forKey: .colour) ?? "#00FF9C"
@@ -158,12 +167,15 @@ struct ServerGroup: Identifiable, Hashable, Codable {
     var name: String
     var colour: String
     var orderIndex: Int
+    /// Optional parent group id — groups form a tree when set.
+    var parentId: UUID?
 
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
         case name, colour
         case orderIndex = "order_index"
+        case parentId = "parent_id"
     }
 
     init(
@@ -171,13 +183,26 @@ struct ServerGroup: Identifiable, Hashable, Codable {
         userId: UUID? = nil,
         name: String,
         colour: String = "#00FF9C",
-        orderIndex: Int = 0
+        orderIndex: Int = 0,
+        parentId: UUID? = nil
     ) {
         self.id = id
         self.userId = userId
         self.name = name
         self.colour = colour
         self.orderIndex = orderIndex
+        self.parentId = parentId
+    }
+
+    // Explicit decoder so older rows without `parent_id` still load.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        userId = try c.decodeIfPresent(UUID.self, forKey: .userId)
+        name = try c.decode(String.self, forKey: .name)
+        colour = try c.decodeIfPresent(String.self, forKey: .colour) ?? "#00FF9C"
+        orderIndex = try c.decodeIfPresent(Int.self, forKey: .orderIndex) ?? 0
+        parentId = try c.decodeIfPresent(UUID.self, forKey: .parentId)
     }
 }
 

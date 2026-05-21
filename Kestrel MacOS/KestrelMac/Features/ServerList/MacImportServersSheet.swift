@@ -409,24 +409,37 @@ struct MacImportServersSheet: View {
 
         isImporting = true
 
-        // Auto-create any group referenced by an imported server
-        // that doesn't already exist in the repository.
-        let importedGroupNames = Set(
-            toImport.compactMap { $0.group?.trimmingCharacters(in: .whitespacesAndNewlines) }
-                    .filter { !$0.isEmpty }
-        )
-        for name in importedGroupNames {
-            let exists = serverRepository.groups.contains {
-                $0.name.caseInsensitiveCompare(name) == .orderedSame
-            }
-            if !exists {
-                let nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
-                serverRepository.addGroup(ServerGroup(name: name, orderIndex: nextOrder))
+        // Resolve each imported folder name to a stable group id — reusing
+        // an existing group of that name or creating one — so imported
+        // servers reference their group by `groupId`, exactly like manually
+        // added servers (and so the membership round-trips to the cloud).
+        var groupIdByName: [String: UUID] = [:]
+        var nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
+        for server in toImport {
+            guard let raw = server.group?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  !raw.isEmpty else { continue }
+            let key = raw.lowercased()
+            if groupIdByName[key] != nil { continue }
+            if let existing = serverRepository.groups.first(where: {
+                $0.name.caseInsensitiveCompare(raw) == .orderedSame
+            }) {
+                groupIdByName[key] = existing.id
+            } else {
+                let group = ServerGroup(name: raw, orderIndex: nextOrder)
+                nextOrder += 1
+                serverRepository.addGroup(group)
+                groupIdByName[key] = group.id
             }
         }
 
         for server in toImport {
-            serverRepository.addServer(server)
+            var s = server
+            if let raw = server.group?.trimmingCharacters(in: .whitespacesAndNewlines),
+               !raw.isEmpty {
+                s.groupId = groupIdByName[raw.lowercased()]
+            }
+            s.group = nil
+            serverRepository.addServer(s)
         }
 
         importedCount = toImport.count

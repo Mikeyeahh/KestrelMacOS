@@ -212,7 +212,13 @@ struct MacEditServerSheet: View {
         username = server.username
         authMethod = server.authMethod
         environment = server.environment
-        group = server.group ?? ""
+        // The form edits the group by *name*; resolve it from the stable id.
+        if let gid = server.groupId,
+           let g = serverRepository.groups.first(where: { $0.id == gid }) {
+            group = g.name
+        } else {
+            group = server.group ?? ""
+        }
         notes = server.notes ?? ""
 
         // Populate port from the protocol-specific column, falling back to server.port
@@ -250,11 +256,21 @@ struct MacEditServerSheet: View {
         let vncPort = connectionTypeOption == .vnc ? portNum : nil
         let rdpPort = connectionTypeOption == .rdp ? portNum : nil
 
+        // Resolve the typed group name to a stable group id, creating the
+        // group if it's new. Membership is tracked by `groupId`, not name.
         let trimmedGroup = group.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !trimmedGroup.isEmpty,
-           !serverRepository.groups.contains(where: { $0.name.caseInsensitiveCompare(trimmedGroup) == .orderedSame }) {
-            let nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
-            serverRepository.addGroup(ServerGroup(name: trimmedGroup, orderIndex: nextOrder))
+        var resolvedGroupId: UUID? = nil
+        if !trimmedGroup.isEmpty {
+            if let existing = serverRepository.groups.first(where: {
+                $0.name.caseInsensitiveCompare(trimmedGroup) == .orderedSame
+            }) {
+                resolvedGroupId = existing.id
+            } else {
+                let nextOrder = (serverRepository.groups.map(\.orderIndex).max() ?? -1) + 1
+                let newGroup = ServerGroup(name: trimmedGroup, orderIndex: nextOrder)
+                serverRepository.addGroup(newGroup)
+                resolvedGroupId = newGroup.id
+            }
         }
 
         if let existing = editingServer {
@@ -267,7 +283,8 @@ struct MacEditServerSheet: View {
             updated.username = effectiveUsername
             updated.authMethod = effectiveAuthMethod
             updated.environment = environment
-            updated.group = group.isEmpty ? nil : group
+            updated.groupId = resolvedGroupId
+            updated.group = nil
             updated.notes = notes.isEmpty ? nil : notes
             updated.vncPort = vncPort
             updated.rdpPort = rdpPort
@@ -282,7 +299,7 @@ struct MacEditServerSheet: View {
                 port: portNum,
                 username: effectiveUsername,
                 authMethod: effectiveAuthMethod,
-                group: group.isEmpty ? nil : group,
+                groupId: resolvedGroupId,
                 environment: environment,
                 notes: notes.isEmpty ? nil : notes,
                 updatedAt: .now,

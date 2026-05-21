@@ -45,6 +45,13 @@ struct MacServerSidebarView: View {
     @State private var newGroupError: String?
     @State private var groupForColorEdit: ServerGroup?
     @State private var pendingGroupColor: Color = KestrelColors.phosphorGreen
+    /// Groups whose contents are expanded. Empty by default → every group
+    /// starts collapsed, so the sidebar opens as a tidy list of folders.
+    @State private var expandedGroups: Set<UUID> = []
+    @State private var didSeedExpansion = false
+    @State private var showingRenameGroup = false
+    @State private var renameGroupTarget: ServerGroup?
+    @State private var renameGroupName = ""
 
     // MARK: - Filtered Servers
 
@@ -57,15 +64,15 @@ struct MacServerSidebarView: View {
         }
     }
 
-    private func filteredServers(inGroup group: String) -> [Server] {
+    private func filteredServers(inGroup groupId: UUID) -> [Server] {
         filteredServers
-            .filter { $0.group == group }
+            .filter { serverRepository.effectiveGroupId($0) == groupId }
             .sorted { $0.orderIndex < $1.orderIndex }
     }
 
     private var filteredUngrouped: [Server] {
         filteredServers
-            .filter { $0.group == nil || $0.group?.isEmpty == true }
+            .filter { serverRepository.effectiveGroupId($0) == nil }
             .sorted { $0.orderIndex < $1.orderIndex }
     }
 
@@ -80,6 +87,16 @@ struct MacServerSidebarView: View {
             bottomSection
         }
         .background(KestrelColors.background)
+        .onAppear {
+            // On launch, top-level (root) folders are expanded so their
+            // contents show, while nested folders start collapsed. Seeded
+            // once per launch; manual toggles are kept afterwards.
+            guard !didSeedExpansion else { return }
+            didSeedExpansion = true
+            for root in childGroups(of: nil) {
+                expandedGroups.insert(root.id)
+            }
+        }
         .searchable(text: $searchText, placement: .sidebar, prompt: "Search servers")
         .confirmationDialog(
             "Delete Server",
@@ -119,7 +136,7 @@ struct MacServerSidebarView: View {
                 groupToDelete = nil
             }
             if let group = groupToDelete,
-               serverRepository.servers.contains(where: { $0.group == group.name }) {
+               serverRepository.servers.contains(where: { serverRepository.effectiveGroupId($0) == group.id }) {
                 Button("Delete Group & Servers", role: .destructive) {
                     deleteGroup(group, includeServers: true)
                     groupToDelete = nil
@@ -130,7 +147,7 @@ struct MacServerSidebarView: View {
             }
         } message: {
             if let group = groupToDelete {
-                let count = serverRepository.servers.filter { $0.group == group.name }.count
+                let count = serverRepository.servers.filter { serverRepository.effectiveGroupId($0) == group.id }.count
                 Text("Delete \"\(group.name)\"? This group has \(count) server\(count == 1 ? "" : "s").")
             }
         }
@@ -155,6 +172,10 @@ struct MacServerSidebarView: View {
             )
         }
         .toolbar {
+            // Add Group / Add Server are disabled while the user is not
+            // signed in — the welcome overlay sits on top of the content,
+            // but window toolbar items live in the chrome above it and
+            // would otherwise stay tappable through the overlay.
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     newGroupName = ""
@@ -164,6 +185,7 @@ struct MacServerSidebarView: View {
                     Image(systemName: "folder.badge.plus")
                 }
                 .help("New Group")
+                .disabled(!supabaseService.isAuthenticated)
             }
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -176,6 +198,7 @@ struct MacServerSidebarView: View {
                     Image(systemName: "plus")
                 }
                 .help("Add Server")
+                .disabled(!supabaseService.isAuthenticated)
             }
         }
         .alert("New Group", isPresented: $showingNewGroupAlert) {
@@ -191,6 +214,13 @@ struct MacServerSidebarView: View {
             } else {
                 Text("Enter a name for the new group.")
             }
+        }
+        .alert("Rename Group", isPresented: $showingRenameGroup) {
+            TextField("Group name", text: $renameGroupName)
+            Button("Rename") { renameGroup() }
+            Button("Cancel", role: .cancel) { renameGroupTarget = nil }
+        } message: {
+            Text("Enter a new name for this group.")
         }
     }
 
@@ -226,22 +256,9 @@ struct MacServerSidebarView: View {
             // Cloud sync row — top item
             cloudSyncRow
 
-            // Grouped servers
-            ForEach(serverRepository.groups) { group in
-                serverGroupSection(group: group)
-            }
-
-            // Ungrouped servers
-            let ungrouped = filteredUngrouped
-            if !ungrouped.isEmpty {
-                Section {
-                    serverRows(ungrouped, group: nil)
-                } header: {
-                    MacSidebarSectionHeader(title: "Ungrouped")
-                        .onDrop(of: [.text], isTargeted: nil) { providers in
-                            handleGroupDrop(providers, targetGroup: nil)
-                        }
-                }
+            // Groups (nested tree) + servers, flattened to depth-tagged rows.
+            ForEach(sidebarRows) { row in
+                sidebarRowView(row)
             }
 
             // Empty state
@@ -323,103 +340,250 @@ struct MacServerSidebarView: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: - Server Group Section
+    // MARK: - Sidebar Row Model
+    //
+    // Groups form a tree (via `parentId`). The list is rendered from a
+    // flattened, depth-tagged walk of that tree so nesting + collapse can
+    // live inside a plain `List`. A collapsed group omits its descendants.
 
-    @ViewBuilder
-    private func serverGroupSection(group: ServerGroup) -> some View {
-        let groupServers = filteredServers(inGroup: group.name)
+    private enum SidebarRow: Identifiable {
+        case group(ServerGroup, depth: Int)
+        case server(Server, depth: Int)
+        case ungroupedHeader
 
-        if !groupServers.isEmpty || searchText.isEmpty {
-            Section {
-                serverRows(groupServers, group: group.name)
-            } header: {
-                MacSidebarSectionHeader(
-                    title: group.name,
-                    accentColor: Color(hex: group.colour)
-                )
-                    .contextMenu {
-                        Button {
-                            pendingGroupColor = Color(hex: group.colour) ?? KestrelColors.phosphorGreen
-                            groupForColorEdit = group
-                        } label: {
-                            Label("Change Color…", systemImage: "paintpalette")
-                        }
-                        Divider()
-                        Button(role: .destructive) {
-                            groupToDelete = group
-                            showingDeleteGroup = true
-                        } label: {
-                            Label("Delete Group", systemImage: "trash")
-                        }
-                    }
-                    .onDrop(of: [.text], isTargeted: nil) { providers in
-                        handleGroupDrop(providers, targetGroup: group.name)
-                    }
+        var id: String {
+            switch self {
+            case .group(let g, _): return "group-\(g.id.uuidString)"
+            case .server(let s, _): return "server-\(s.id.uuidString)"
+            case .ungroupedHeader: return "ungrouped-header"
             }
         }
     }
 
-    // MARK: - Server Rows (with drag/drop reorder)
+    private func childGroups(of parentId: UUID?) -> [ServerGroup] {
+        serverRepository.groups
+            .filter { $0.parentId == parentId }
+            .sorted { $0.orderIndex < $1.orderIndex }
+    }
+
+    private var sidebarRows: [SidebarRow] {
+        var rows: [SidebarRow] = []
+        func walk(_ group: ServerGroup, depth: Int) {
+            rows.append(.group(group, depth: depth))
+            guard expandedGroups.contains(group.id) else { return }
+            for server in filteredServers(inGroup: group.id) {
+                rows.append(.server(server, depth: depth + 1))
+            }
+            for child in childGroups(of: group.id) {
+                walk(child, depth: depth + 1)
+            }
+        }
+        for root in childGroups(of: nil) {
+            walk(root, depth: 0)
+        }
+        let ungrouped = filteredUngrouped
+        if !ungrouped.isEmpty {
+            rows.append(.ungroupedHeader)
+            for server in ungrouped {
+                rows.append(.server(server, depth: 1))
+            }
+        }
+        return rows
+    }
 
     @ViewBuilder
-    private func serverRows(_ servers: [Server], group: String?) -> some View {
-        ForEach(servers) { server in
-            MacServerRow(
-                server: server,
-                isSelected: selectedServer?.id == server.id,
-                sessionManager: sessionManager
-            )
-            .tag(server)
-            .onTapGesture {
-                selectedServer = server
-                switch server.connectionProtocol {
-                case .vnc: activeView = .vnc(server)
-                case .rdp: activeView = .rdp(server)
-                case .ssh: activeView = .terminal(server)
+    private func sidebarRowView(_ row: SidebarRow) -> some View {
+        switch row {
+        case .group(let group, let depth):
+            groupHeaderRow(group, depth: depth)
+        case .server(let server, let depth):
+            serverRowView(server, depth: depth)
+        case .ungroupedHeader:
+            MacSidebarSectionHeader(title: "Ungrouped")
+                .onDrop(of: [.text], isTargeted: nil) { providers in
+                    handleSidebarDrop(providers, ontoGroupId: nil)
                 }
-            }
-            .contextMenu {
-                serverContextMenu(for: server)
-            }
-            .onDrag {
-                NSItemProvider(object: server.id.uuidString as NSString)
-            }
-            .onDrop(of: [.text], isTargeted: nil) { providers in
-                handleGroupDrop(providers, targetGroup: group)
-            }
-        }
-        .onMove { source, destination in
-            serverRepository.moveServer(from: source, to: destination, inGroup: group)
         }
     }
 
-    // MARK: - Cross-Group Drop
+    // MARK: - Group Header Row
 
-    private func handleGroupDrop(_ providers: [NSItemProvider], targetGroup: String?) -> Bool {
+    @ViewBuilder
+    private func groupHeaderRow(_ group: ServerGroup, depth: Int) -> some View {
+        let isExpanded = expandedGroups.contains(group.id)
+        let count = filteredServers(inGroup: group.id).count
+        HStack(spacing: 6) {
+            Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                .font(.system(size: 9, weight: .semibold))
+                .foregroundStyle(KestrelColors.textFaint)
+                .frame(width: 10)
+            Text(group.name.uppercased())
+                .font(KestrelFonts.mono(10))
+                .fontWeight(.medium)
+                .tracking(1.2)
+                .foregroundStyle(Color(hex: group.colour) ?? KestrelColors.textFaint)
+            Spacer()
+            if !isExpanded && count > 0 {
+                Text("\(count)")
+                    .font(KestrelFonts.mono(9))
+                    .foregroundStyle(KestrelColors.textFaint)
+            }
+        }
+        .padding(.leading, CGFloat(depth) * 12)
+        .padding(.top, 12)
+        .padding(.bottom, 4)
+        .contentShape(Rectangle())
+        .onTapGesture { toggleExpanded(group.id) }
+        .contextMenu {
+            Button {
+                renameGroupTarget = group
+                renameGroupName = group.name
+                showingRenameGroup = true
+            } label: {
+                Label("Rename Group", systemImage: "pencil")
+            }
+            Button {
+                pendingGroupColor = Color(hex: group.colour) ?? KestrelColors.phosphorGreen
+                groupForColorEdit = group
+            } label: {
+                Label("Change Color…", systemImage: "paintpalette")
+            }
+            Divider()
+            Button(role: .destructive) {
+                groupToDelete = group
+                showingDeleteGroup = true
+            } label: {
+                Label("Delete Group", systemImage: "trash")
+            }
+        }
+        .onDrag {
+            NSItemProvider(object: "group:\(group.id.uuidString)" as NSString)
+        }
+        .onDrop(of: [.text], isTargeted: nil) { providers in
+            handleSidebarDrop(providers, ontoGroupId: group.id)
+        }
+        .listRowBackground(Color.clear)
+    }
+
+    @ViewBuilder
+    private func serverRowView(_ server: Server, depth: Int) -> some View {
+        MacServerRow(
+            server: server,
+            isSelected: selectedServer?.id == server.id,
+            sessionManager: sessionManager
+        )
+        .tag(server)
+        .padding(.leading, CGFloat(depth) * 12)
+        .onTapGesture {
+            selectedServer = server
+            switch server.connectionProtocol {
+            case .vnc: activeView = .vnc(server)
+            case .rdp: activeView = .rdp(server)
+            case .ssh: activeView = .terminal(server)
+            }
+        }
+        .contextMenu {
+            serverContextMenu(for: server)
+        }
+        .onDrag {
+            NSItemProvider(object: server.id.uuidString as NSString)
+        }
+    }
+
+    private func toggleExpanded(_ id: UUID) {
+        withAnimation(.snappy) {
+            if expandedGroups.contains(id) {
+                expandedGroups.remove(id)
+            } else {
+                expandedGroups.insert(id)
+            }
+        }
+    }
+
+    // MARK: - Drag & Drop
+    //
+    // A dragged payload is either a server id (raw UUID string) or a group
+    // id (prefixed `group:`). Dropping a server onto a group joins it;
+    // dropping a group onto a group nests it; dropping either on the
+    // Ungrouped header (`ontoGroupId == nil`) moves it back to the root.
+
+    private func handleSidebarDrop(_ providers: [NSItemProvider], ontoGroupId targetGroupId: UUID?) -> Bool {
         var accepted = false
         for provider in providers where provider.canLoadObject(ofClass: NSString.self) {
             accepted = true
             _ = provider.loadObject(ofClass: NSString.self) { object, _ in
-                guard let idString = object as? String,
-                      let uuid = UUID(uuidString: idString) else { return }
+                guard let payload = object as? String else { return }
                 Task { @MainActor in
-                    moveServer(id: uuid, toGroup: targetGroup)
+                    if payload.hasPrefix("group:") {
+                        let raw = String(payload.dropFirst("group:".count))
+                        if let gid = UUID(uuidString: raw) {
+                            reparentGroup(gid, toParentId: targetGroupId)
+                        }
+                    } else if let sid = UUID(uuidString: payload) {
+                        moveServer(id: sid, toGroupId: targetGroupId)
+                    }
                 }
             }
         }
         return accepted
     }
 
-    private func moveServer(id: UUID, toGroup target: String?) {
+    private func moveServer(id: UUID, toGroupId target: UUID?) {
         guard var server = serverRepository.servers.first(where: { $0.id == id }) else { return }
-        let trimmed = target?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let newGroup: String? = (trimmed?.isEmpty == false) ? trimmed : nil
-        if server.group == newGroup { return }
-        server.group = newGroup
+        if serverRepository.effectiveGroupId(server) == target { return }
+        // Write the canonical id; clear the legacy name so it can't drift.
+        server.groupId = target
+        server.group = nil
         server.updatedAt = .now
         withAnimation(.snappy) {
             serverRepository.updateServer(server)
         }
+    }
+
+    /// Re-parent a group. Ignores self-drops, no-op moves, and any move that
+    /// would create a cycle (dropping a group onto one of its descendants).
+    private func reparentGroup(_ id: UUID, toParentId newParent: UUID?) {
+        guard var group = serverRepository.groups.first(where: { $0.id == id }) else { return }
+        if id == newParent || group.parentId == newParent { return }
+        if let newParent, isDescendant(newParent, of: id) { return }
+        group.parentId = newParent
+        withAnimation(.snappy) {
+            serverRepository.updateGroup(group)
+        }
+    }
+
+    private func isDescendant(_ candidate: UUID, of ancestor: UUID) -> Bool {
+        var current = serverRepository.groups.first(where: { $0.id == candidate })
+        while let parent = current?.parentId {
+            if parent == ancestor { return true }
+            current = serverRepository.groups.first(where: { $0.id == parent })
+        }
+        return false
+    }
+
+    // MARK: - Rename Group
+
+    private func renameGroup() {
+        guard let group = renameGroupTarget else { return }
+        let trimmed = renameGroupName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed != group.name else {
+            renameGroupTarget = nil
+            return
+        }
+        // Migrate any members still referencing this group by its old name
+        // onto the stable id, so the rename can't orphan them.
+        for server in serverRepository.servers
+        where server.groupId == nil && server.group == group.name {
+            var migrated = server
+            migrated.groupId = group.id
+            migrated.group = nil
+            migrated.updatedAt = .now
+            serverRepository.updateServer(migrated)
+        }
+        var updated = group
+        updated.name = trimmed
+        serverRepository.updateGroup(updated)
+        renameGroupTarget = nil
     }
 
     // MARK: - Context Menu
@@ -616,15 +780,19 @@ struct MacServerSidebarView: View {
 
     private func deleteGroup(_ group: ServerGroup, includeServers: Bool) {
         withAnimation(.snappy) {
+            let members = serverRepository.servers.filter {
+                serverRepository.effectiveGroupId($0) == group.id
+            }
             if includeServers {
-                for server in serverRepository.servers where server.group == group.name {
+                for server in members {
                     sessionManager.closeSession(serverID: server.id)
                     serverRepository.removeServer(server)
                 }
             } else {
                 // Ungroup the servers
-                for server in serverRepository.servers where server.group == group.name {
+                for server in members {
                     var updated = server
+                    updated.groupId = nil
                     updated.group = nil
                     updated.updatedAt = .now
                     serverRepository.updateServer(updated)

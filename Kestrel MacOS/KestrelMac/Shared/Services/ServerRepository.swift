@@ -75,21 +75,29 @@ class ServerRepository: ObservableObject {
         }
     }
 
-    func servers(inGroup groupName: String) -> [Server] {
+    /// Resolve a server's group id. Prefers the canonical `groupId`; falls
+    /// back to matching the legacy `group` *name* so pre-id data still groups.
+    func effectiveGroupId(_ server: Server) -> UUID? {
+        if let gid = server.groupId { return gid }
+        guard let name = server.group, !name.isEmpty else { return nil }
+        return groups.first(where: { $0.name == name })?.id
+    }
+
+    func servers(inGroup groupId: UUID) -> [Server] {
         servers
-            .filter { $0.group == groupName }
+            .filter { effectiveGroupId($0) == groupId }
             .sorted { $0.orderIndex < $1.orderIndex }
     }
 
     var ungroupedServers: [Server] {
         servers
-            .filter { $0.group == nil || $0.group?.isEmpty == true }
+            .filter { effectiveGroupId($0) == nil }
             .sorted { $0.orderIndex < $1.orderIndex }
     }
 
-    func moveServer(from source: IndexSet, to destination: Int, inGroup group: String?) {
-        if let group {
-            var grouped = servers(inGroup: group)
+    func moveServer(from source: IndexSet, to destination: Int, inGroup groupId: UUID?) {
+        if let groupId {
+            var grouped = servers(inGroup: groupId)
             grouped.move(fromOffsets: source, toOffset: destination)
             for (i, moved) in grouped.enumerated() {
                 if let idx = servers.firstIndex(where: { $0.id == moved.id }) {

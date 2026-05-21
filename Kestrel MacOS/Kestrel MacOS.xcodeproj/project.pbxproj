@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06090DCA53EC265FADAC88B9 /* MacPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A473DD6A8A755565913139 /* MacPaywallView.swift */; };
+		2775BBF02F8C38BC008678FA /* MacWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */; };
 		0D84CD0CFD1E155187E5FEBA /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 2FA7BA56880C65B82BDD7E64 /* RevenueCat */; };
 		1160718293A4B5C6D7E8F902 /* MacRDPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2260718293A4B5C6D7E8F903 /* MacRDPView.swift */; };
 		17DA24D5608732C2CB67BAC9 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3F617CD12DE03C88555B98 /* TerminalView.swift */; };
@@ -102,6 +103,7 @@
 		7DF031E33D53A4541B208FE1 /* KestrelColors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelColors.swift; path = Shared/Models/KestrelColors.swift; sourceTree = "<group>"; };
 		814EF6A0EA78FADA4DF2510B /* KestrelFonts+Mac.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "KestrelFonts+Mac.swift"; path = "Components/KestrelFonts+Mac.swift"; sourceTree = "<group>"; };
 		83A473DD6A8A755565913139 /* MacPaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacPaywallView.swift; path = Features/Paywall/MacPaywallView.swift; sourceTree = "<group>"; };
+		2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacWelcomeView.swift; path = Features/Onboarding/MacWelcomeView.swift; sourceTree = "<group>"; };
 		93D28042070FA1A29B762D48 /* KestrelMac.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KestrelMac.entitlements; sourceTree = "<group>"; };
 		997CB85E9B06AACE3929846C /* NotificationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationManager.swift; path = App/NotificationManager.swift; sourceTree = "<group>"; };
 		A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SavedCommand.swift; path = Shared/Models/SavedCommand.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */,
 				3CF2E07896AB02A24D7A6DF2 /* MacCloudSyncView.swift */,
 				83A473DD6A8A755565913139 /* MacPaywallView.swift */,
+				2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */,
 				3D0137CDF8E99C4ADAE29485 /* MacMenuCommands.swift */,
 				572CD2FFF926AE1D6218C0BC /* DeepLinkHandler.swift */,
 				997CB85E9B06AACE3929846C /* NotificationManager.swift */,
@@ -358,6 +361,7 @@
 				9483CE72339C047EE32A2FC1 /* MacCloudSyncView.swift in Sources */,
 				2775BBED2F8C34CE008678FA /* KeychainService.swift in Sources */,
 				06090DCA53EC265FADAC88B9 /* MacPaywallView.swift in Sources */,
+				2775BBF02F8C38BC008678FA /* MacWelcomeView.swift in Sources */,
 				362DCBCBB193A0D549DC9AFD /* MacMenuCommands.swift in Sources */,
 				B7E773483CABC3F96AA3E2F7 /* DeepLinkHandler.swift in Sources */,
 				863A36FCEB357F2C0F3ABD51 /* NotificationManager.swift in Sources */,
@@ -380,7 +384,7 @@
 				CODE_SIGN_ENTITLEMENTS = KestrelMac/KestrelMac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = RC45VZ228R;
 				ENABLE_APP_SANDBOX = YES;
@@ -538,7 +542,7 @@
 				CODE_SIGN_ENTITLEMENTS = KestrelMac/KestrelMac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = RC45VZ228R;
 				ENABLE_APP_SANDBOX = YES;

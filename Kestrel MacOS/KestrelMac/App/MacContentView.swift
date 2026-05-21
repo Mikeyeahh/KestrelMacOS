@@ -11,6 +11,10 @@ struct MacContentView: View {
     @EnvironmentObject var serverRepository: ServerRepository
     @EnvironmentObject var sessionManager: SSHSessionManager
     @EnvironmentObject var deepLinkHandler: DeepLinkHandler
+    // Observe the shared SupabaseService so the welcome overlay tracks
+    // sign-in / sign-out events. `@ObservedObject` (not `@StateObject`)
+    // because the instance is owned by the singleton itself, not this view.
+    @ObservedObject private var supabaseAuth = SupabaseService.shared
     @State private var selectedServer: Server?
     @State private var activeView: SidebarActiveView?
 
@@ -20,11 +24,32 @@ struct MacContentView: View {
 
     @State private var showingImportSheet = false
 
+    @AppStorage("onboarding.completed") private var onboardingCompleted = false
+
     // Per-window scene storage for restoring position
     @SceneStorage("window.selectedServerID") private var storedServerID: String?
     @SceneStorage("window.activeView") private var storedActiveView: String?
 
     var body: some View {
+        ZStack {
+            mainContent
+
+            // Registration is required to use the app: the welcome overlay
+            // stays up until the user has *both* completed onboarding once
+            // and has an active authenticated Supabase session.
+            if !onboardingCompleted || !supabaseAuth.isAuthenticated {
+                MacWelcomeView {
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        onboardingCompleted = true
+                    }
+                }
+                .transition(.opacity)
+                .zIndex(1)
+            }
+        }
+    }
+
+    private var mainContent: some View {
         NavigationSplitView {
             MacServerSidebarView(
                 selectedServer: $selectedServer,
@@ -59,6 +84,9 @@ struct MacContentView: View {
             handleOpenServer(notification)
         }
         .onReceive(NotificationCenter.default.publisher(for: .kestrelAddServer)) { _ in
+            // Ignore keyboard-shortcut / menu-bar Add Server while the user
+            // is gated on the welcome overlay — they must register first.
+            guard supabaseAuth.isAuthenticated && onboardingCompleted else { return }
             deepLinkHandler.showAddServerSheet = true
         }
         .onReceive(NotificationCenter.default.publisher(for: .kestrelShowDashboard)) { _ in
