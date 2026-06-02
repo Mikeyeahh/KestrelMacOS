@@ -870,6 +870,11 @@ class SSHSessionManager: ObservableObject {
 
         do {
             try await session.connect()
+
+            // A successful connection is a positive moment — count it toward
+            // possibly asking the user for an App Store review.
+            AppReviewManager.shared.recordMilestone()
+
             return session
         } catch {
             activeSessions.removeValue(forKey: server.id)
