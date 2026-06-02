@@ -8,6 +8,7 @@
 import SwiftUI
 import RevenueCat
 import StoreKit
+import Combine
 
 @main
 struct KestrelMacApp: App {
