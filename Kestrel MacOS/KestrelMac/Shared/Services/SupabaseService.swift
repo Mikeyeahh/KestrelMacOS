@@ -19,13 +19,24 @@ struct ConnectedDevice: Identifiable, Codable {
     let hasActiveSessions: Bool
 
     enum DeviceType: String, Codable {
-        case mac, iphone, ipad
+        case mac, iphone, ipad, windows, linux, unknown
+
+        // Decode unknown raw values to `.unknown` instead of throwing, so a
+        // device type added by another platform (e.g. Windows writes
+        // "windows") never breaks decoding of the whole device list.
+        init(from decoder: Decoder) throws {
+            let raw = try decoder.singleValueContainer().decode(String.self)
+            self = DeviceType(rawValue: raw) ?? .unknown
+        }
 
         var icon: String {
             switch self {
             case .mac: "laptopcomputer"
             case .iphone: "iphone"
             case .ipad: "ipad"
+            case .windows: "pc"
+            case .linux: "terminal"
+            case .unknown: "desktopcomputer"
             }
         }
     }
