@@ -725,6 +725,7 @@ struct AboutSettingsTab: View {
             }
 
             Section {
+                Link("Rate Kestrel on the App Store", destination: URL(string: "https://apps.apple.com/app/id6764020106?action=write-review")!)
                 Link("Send Feedback", destination: URL(string: "mailto:support@getosprey.app?subject=Kestrel%20Mac%20Feedback")!)
             }
         }
