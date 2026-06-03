@@ -68,6 +68,7 @@ private struct SettingsWindowStyler: NSViewRepresentable {
 
 struct AppearanceSettingsTab: View {
     @AppStorage("app.theme") private var selectedTheme = "Phosphor"
+    @AppStorage("app.font") private var selectedFont = "jetbrains-mono"
 
     var body: some View {
         Form {
@@ -111,6 +112,46 @@ struct AppearanceSettingsTab: View {
                                     .font(.system(size: 11, design: .monospaced))
                                     .foregroundStyle(
                                         selectedTheme == themeID.rawValue ? .primary : .secondary
+                                    )
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+
+            Section("App Font") {
+                HStack(spacing: 16) {
+                    ForEach(AppFontID.allCases) { fontID in
+                        Button {
+                            selectedFont = fontID.rawValue
+                            FontManager.shared.currentFontID = fontID
+                            // Sync the choice so it follows the user to iOS/Windows.
+                            Task { await SupabaseService.shared.saveUserSettings(uiFont: fontID.rawValue) }
+                        } label: {
+                            VStack(spacing: 8) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Color.gray.opacity(0.12))
+                                        .frame(width: 72, height: 52)
+                                    Text("Ag")
+                                        .font(KestrelFonts.fontForID(fontID, size: 24, weight: .semibold))
+                                }
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .strokeBorder(
+                                            selectedFont == fontID.rawValue
+                                                ? Color.accentColor
+                                                : Color.gray.opacity(0.3),
+                                            lineWidth: selectedFont == fontID.rawValue ? 2 : 1
+                                        )
+                                )
+
+                                Text(fontID.label)
+                                    .font(.system(size: 11, design: .monospaced))
+                                    .foregroundStyle(
+                                        selectedFont == fontID.rawValue ? .primary : .secondary
                                     )
                             }
                         }

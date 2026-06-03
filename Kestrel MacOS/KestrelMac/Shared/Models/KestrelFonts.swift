@@ -9,34 +9,116 @@
 import SwiftUI
 import AppKit
 
+// MARK: - App Font (whole-UI typeface; synced via user_settings)
+//
+// Defined here (rather than a standalone file) because the macOS target uses
+// classic Xcode groups — keeping it in an already-compiled file avoids a
+// project.pbxproj edit. Raw values match the iOS/Windows ids so the choice
+// syncs across platforms.
+
+enum AppFontID: String, CaseIterable, Identifiable {
+    case jetbrainsMono = "jetbrains-mono"
+    case ibmPlexMono   = "ibm-plex-mono"
+    case spaceMono     = "space-mono"
+    case inter         = "inter"
+    case outfit        = "outfit"
+    case system        = "system"
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .jetbrainsMono: "JetBrains Mono"
+        case .ibmPlexMono:   "IBM Plex Mono"
+        case .spaceMono:     "Space Mono"
+        case .inter:         "Inter"
+        case .outfit:        "Outfit"
+        case .system:        "System"
+        }
+    }
+
+    var isMono: Bool {
+        switch self {
+        case .jetbrainsMono, .ibmPlexMono, .spaceMono: true
+        case .inter, .outfit, .system: false
+        }
+    }
+
+    /// Bundled font family base name (the "-Regular" PostScript stem). `nil`
+    /// uses the system font. NOTE: the matching .ttf files must be added to the
+    /// app's Fonts resources (target membership + ATSApplicationFontsPath);
+    /// until then this falls back to the system font.
+    var baseFontName: String? {
+        switch self {
+        case .jetbrainsMono: "JetBrainsMono-Regular"
+        case .ibmPlexMono:   "IBMPlexMono-Regular"
+        case .spaceMono:     "SpaceMono-Regular"
+        case .inter:         "Inter18pt-Regular"
+        case .outfit:        "Outfit-Regular"
+        case .system:        nil
+        }
+    }
+
+    var systemDesign: Font.Design { isMono ? .monospaced : .default }
+}
+
+/// Singleton that persists and provides the active UI font. Mirrors `ThemeManager`.
+final class FontManager {
+    static let shared = FontManager()
+
+    var currentFontID: AppFontID {
+        didSet {
+            UserDefaults.standard.set(currentFontID.rawValue, forKey: "app.font")
+        }
+    }
+
+    private init() {
+        let stored = UserDefaults.standard.string(forKey: "app.font") ?? ""
+        self.currentFontID = AppFontID(rawValue: stored) ?? .jetbrainsMono
+    }
+}
+
 enum KestrelFonts {
-    /// Monospaced font for technical text. Uses the active theme's
-    /// `monoFontName` when it's set and the font is installed; otherwise
-    /// falls back to the system monospaced design.
-    static func mono(_ size: CGFloat) -> Font {
-        if let name = ThemeManager.shared.current.monoFontName,
-           NSFont(name: name, size: size) != nil {
-            return .custom(name, size: size)
-        }
-        return .system(size: size, design: .monospaced)
-    }
-
-    /// Bold variant of the monospaced font.
-    static func monoBold(_ size: CGFloat) -> Font {
-        if let baseName = ThemeManager.shared.current.monoFontName {
-            let boldName = baseName.replacingOccurrences(of: "-Regular", with: "-Bold")
-            if NSFont(name: boldName, size: size) != nil {
-                return .custom(boldName, size: size)
+    /// Builds a Font for a SPECIFIC app font id — used by the Settings picker so
+    /// each tile previews in its own typeface, and internally by the helpers
+    /// below for the active choice. Falls back to the system font when the
+    /// bundled .ttf isn't installed yet.
+    static func fontForID(_ font: AppFontID, size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        if let base = font.baseFontName {
+            let weighted = weightedName(base: base, weight: weight)
+            if NSFont(name: weighted, size: size) != nil {
+                return .custom(weighted, size: size)
             }
-            if NSFont(name: baseName, size: size) != nil {
-                return .custom(baseName, size: size).weight(.semibold)
+            if NSFont(name: base, size: size) != nil {
+                return .custom(base, size: size).weight(weight)
             }
         }
-        return .system(size: size, weight: .semibold, design: .monospaced)
+        return .system(size: size, weight: weight, design: font.systemDesign)
     }
 
-    /// Display font using system rounded design.
+    private static func weightedName(base: String, weight: Font.Weight) -> String {
+        let suffix: String
+        switch weight {
+        case .bold, .heavy, .black: suffix = "-Bold"
+        case .semibold, .medium:    suffix = "-Medium"
+        default:                    suffix = "-Regular"
+        }
+        return base.replacingOccurrences(of: "-Regular", with: suffix)
+    }
+
+    private static func resolved(_ size: CGFloat, weight: Font.Weight) -> Font {
+        fontForID(FontManager.shared.currentFontID, size: size, weight: weight)
+    }
+
+    /// Monospaced/technical text — now follows the chosen app font (still the
+    /// system monospaced design when "System" is selected).
+    static func mono(_ size: CGFloat) -> Font { resolved(size, weight: .regular) }
+
+    /// Bold variant of the app font.
+    static func monoBold(_ size: CGFloat) -> Font { resolved(size, weight: .bold) }
+
+    /// Display/heading font. Follows the chosen app font so the whole UI matches.
     static func display(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
-        .system(size: size, weight: weight, design: .rounded)
+        resolved(size, weight: weight)
     }
 }

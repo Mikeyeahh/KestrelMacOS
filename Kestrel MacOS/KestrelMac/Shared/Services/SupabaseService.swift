@@ -220,6 +220,52 @@ class SupabaseService: ObservableObject {
             await RevenueCatService.shared.identify(appUserID: userId.uuidString)
         }
         RevenueCatService.shared.cloudPro = await fetchProStatus()
+        await refreshUserSettings()
+    }
+
+    // MARK: - User Settings (table: user_settings)
+
+    private struct UserSettingsRow: Decodable { let ui_font: String? }
+
+    /// Pulls per-account UI preferences (currently the whole-app font) and
+    /// applies them. RLS limits the query to the caller's own row. Best-effort.
+    func refreshUserSettings() async {
+        guard let userId else { return }
+        do {
+            let rows: [UserSettingsRow] = try await client
+                .from("user_settings")
+                .select("ui_font")
+                .eq("user_id", value: userId.uuidString)
+                .limit(1)
+                .execute()
+                .value
+            if let raw = rows.first?.ui_font, let font = AppFontID(rawValue: raw) {
+                FontManager.shared.currentFontID = font
+            }
+        } catch {
+            // best-effort — keep the local font on any error
+        }
+    }
+
+    /// Writes the chosen app font to the user's settings row so it follows them
+    /// to the iOS and Windows apps.
+    func saveUserSettings(uiFont: String) async {
+        guard let userId else { return }
+        struct UserSettingsUpsert: Encodable {
+            let user_id: String
+            let ui_font: String
+            let updated_at: String
+        }
+        let row = UserSettingsUpsert(
+            user_id: userId.uuidString,
+            ui_font: uiFont,
+            updated_at: ISO8601DateFormatter().string(from: Date())
+        )
+        do {
+            try await client.from("user_settings").upsert(row).execute()
+        } catch {
+            // best-effort — the local choice is already applied
+        }
     }
 
     /// True when the signed-in user has an active subscription row. RLS limits

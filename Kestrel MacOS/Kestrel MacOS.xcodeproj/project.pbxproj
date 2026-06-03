@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		06090DCA53EC265FADAC88B9 /* MacPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A473DD6A8A755565913139 /* MacPaywallView.swift */; };
-		2775BBF02F8C38BC008678FA /* MacWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */; };
 		0D84CD0CFD1E155187E5FEBA /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 2FA7BA56880C65B82BDD7E64 /* RevenueCat */; };
 		1160718293A4B5C6D7E8F902 /* MacRDPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2260718293A4B5C6D7E8F903 /* MacRDPView.swift */; };
 		17DA24D5608732C2CB67BAC9 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3F617CD12DE03C88555B98 /* TerminalView.swift */; };
@@ -26,6 +25,18 @@
 		2775BBEB2F8C3295008678FA /* Citadel in Frameworks */ = {isa = PBXBuildFile; productRef = 2775BBEA2F8C3295008678FA /* Citadel */; };
 		2775BBED2F8C34CE008678FA /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBEC2F8C34CE008678FA /* KeychainService.swift */; };
 		2775BBEF2F8C38BC008678FA /* MacEditServerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBEE2F8C38BC008678FA /* MacEditServerSheet.swift */; };
+		2775BBF02F8C38BC008678FA /* MacWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */; };
+		2797223A2FD0CF57001D14B2 /* Inter_18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722322FD0CF57001D14B2 /* Inter_18pt-Bold.ttf */; };
+		2797223B2FD0CF57001D14B2 /* Inter_18pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722332FD0CF57001D14B2 /* Inter_18pt-Medium.ttf */; };
+		2797223C2FD0CF57001D14B2 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722392FD0CF57001D14B2 /* SpaceMono-Regular.ttf */; };
+		2797223D2FD0CF57001D14B2 /* Outfit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722362FD0CF57001D14B2 /* Outfit-Medium.ttf */; };
+		2797223E2FD0CF57001D14B2 /* SpaceMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722382FD0CF57001D14B2 /* SpaceMono-Bold.ttf */; };
+		2797223F2FD0CF57001D14B2 /* Inter_18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722342FD0CF57001D14B2 /* Inter_18pt-Regular.ttf */; };
+		279722402FD0CF57001D14B2 /* Outfit-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722352FD0CF57001D14B2 /* Outfit-Bold.ttf */; };
+		279722412FD0CF57001D14B2 /* Outfit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722372FD0CF57001D14B2 /* Outfit-Regular.ttf */; };
+		279722452FD0D042001D14B2 /* IBMPlexMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722432FD0D042001D14B2 /* IBMPlexMono-Medium.ttf */; };
+		279722462FD0D042001D14B2 /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722442FD0D042001D14B2 /* IBMPlexMono-Regular.ttf */; };
+		279722472FD0D042001D14B2 /* IBMPlexMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279722422FD0D042001D14B2 /* IBMPlexMono-Bold.ttf */; };
 		2B8262C3B4BFB89FFBC6487A /* MacSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */; };
 		335E1D41178934DE894008FF /* MacCommandLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF1A9F5C11BDAD7001D5BE /* MacCommandLibraryView.swift */; };
 		3360718293A4B5C6D7E8F904 /* MacMultiExecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4460718293A4B5C6D7E8F905 /* MacMultiExecView.swift */; };
@@ -80,6 +91,18 @@
 		2775BBE22F8C2A2E008678FA /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		2775BBEC2F8C34CE008678FA /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		2775BBEE2F8C38BC008678FA /* MacEditServerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacEditServerSheet.swift; sourceTree = "<group>"; };
+		2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacWelcomeView.swift; path = Features/Onboarding/MacWelcomeView.swift; sourceTree = "<group>"; };
+		279722322FD0CF57001D14B2 /* Inter_18pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Bold.ttf"; sourceTree = "<group>"; };
+		279722332FD0CF57001D14B2 /* Inter_18pt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Medium.ttf"; sourceTree = "<group>"; };
+		279722342FD0CF57001D14B2 /* Inter_18pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Regular.ttf"; sourceTree = "<group>"; };
+		279722352FD0CF57001D14B2 /* Outfit-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Bold.ttf"; sourceTree = "<group>"; };
+		279722362FD0CF57001D14B2 /* Outfit-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Medium.ttf"; sourceTree = "<group>"; };
+		279722372FD0CF57001D14B2 /* Outfit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Regular.ttf"; sourceTree = "<group>"; };
+		279722382FD0CF57001D14B2 /* SpaceMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceMono-Bold.ttf"; sourceTree = "<group>"; };
+		279722392FD0CF57001D14B2 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceMono-Regular.ttf"; sourceTree = "<group>"; };
+		279722422FD0D042001D14B2 /* IBMPlexMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Bold.ttf"; sourceTree = "<group>"; };
+		279722432FD0D042001D14B2 /* IBMPlexMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Medium.ttf"; sourceTree = "<group>"; };
+		279722442FD0D042001D14B2 /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
 		28CBE17E2C632A18B3A74E9A /* ServerRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerRepository.swift; path = Shared/Services/ServerRepository.swift; sourceTree = "<group>"; };
 		2C7CF303C20431C7195C91C3 /* KestrelColors+Mac.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "KestrelColors+Mac.swift"; path = "Components/KestrelColors+Mac.swift"; sourceTree = "<group>"; };
 		2CBA1C9CD4873FE40A415769 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,7 +126,6 @@
 		7DF031E33D53A4541B208FE1 /* KestrelColors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelColors.swift; path = Shared/Models/KestrelColors.swift; sourceTree = "<group>"; };
 		814EF6A0EA78FADA4DF2510B /* KestrelFonts+Mac.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "KestrelFonts+Mac.swift"; path = "Components/KestrelFonts+Mac.swift"; sourceTree = "<group>"; };
 		83A473DD6A8A755565913139 /* MacPaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacPaywallView.swift; path = Features/Paywall/MacPaywallView.swift; sourceTree = "<group>"; };
-		2775BBF12F8C38BC008678FA /* MacWelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacWelcomeView.swift; path = Features/Onboarding/MacWelcomeView.swift; sourceTree = "<group>"; };
 		93D28042070FA1A29B762D48 /* KestrelMac.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KestrelMac.entitlements; sourceTree = "<group>"; };
 		997CB85E9B06AACE3929846C /* NotificationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationManager.swift; path = App/NotificationManager.swift; sourceTree = "<group>"; };
 		A0ADF74A2BBBCD833C8C7A81 /* SavedCommand.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SavedCommand.swift; path = Shared/Models/SavedCommand.swift; sourceTree = "<group>"; };
@@ -112,7 +134,7 @@
 		BB2C3D4E5F60718293A4B5C6 /* ServerImportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerImportService.swift; path = Shared/Services/ServerImportService.swift; sourceTree = "<group>"; };
 		D13C0BF692B82991A40066F8 /* RevenueCatService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RevenueCatService.swift; path = Shared/Services/RevenueCatService.swift; sourceTree = "<group>"; };
 		D470F236FF89601276A971BE /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaywallView.swift; path = Features/Paywall/PaywallView.swift; sourceTree = "<group>"; };
-		D767937D3F0244AE97C1CF4B /* Kestrel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Kestrel.app"; path = Kestrel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D767937D3F0244AE97C1CF4B /* Kestrel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kestrel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A112691A07C85CF0185CB3 /* KestrelComponents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KestrelComponents.swift; path = Shared/Models/KestrelComponents.swift; sourceTree = "<group>"; };
 		DD4E5F60718293A4B5C6D7E8 /* MacImportServersSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacImportServersSheet.swift; path = Features/ServerList/MacImportServersSheet.swift; sourceTree = "<group>"; };
 		E3AAD26DB9CCC86B6369E55D /* MacSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacSettingsView.swift; path = Settings/MacSettingsView.swift; sourceTree = "<group>"; };
@@ -196,6 +218,17 @@
 		274397BA2FB3C0D500BC9E24 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				279722422FD0D042001D14B2 /* IBMPlexMono-Bold.ttf */,
+				279722432FD0D042001D14B2 /* IBMPlexMono-Medium.ttf */,
+				279722442FD0D042001D14B2 /* IBMPlexMono-Regular.ttf */,
+				279722322FD0CF57001D14B2 /* Inter_18pt-Bold.ttf */,
+				279722332FD0CF57001D14B2 /* Inter_18pt-Medium.ttf */,
+				279722342FD0CF57001D14B2 /* Inter_18pt-Regular.ttf */,
+				279722352FD0CF57001D14B2 /* Outfit-Bold.ttf */,
+				279722362FD0CF57001D14B2 /* Outfit-Medium.ttf */,
+				279722372FD0CF57001D14B2 /* Outfit-Regular.ttf */,
+				279722382FD0CF57001D14B2 /* SpaceMono-Bold.ttf */,
+				279722392FD0CF57001D14B2 /* SpaceMono-Regular.ttf */,
 				274397B62FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf */,
 				274397B72FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf */,
 				274397B82FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf */,
@@ -254,14 +287,14 @@
 			);
 			dependencies = (
 			);
-			name = "Kestrel";
+			name = Kestrel;
 			packageProductDependencies = (
 				2FA7BA56880C65B82BDD7E64 /* RevenueCat */,
 				DE496F65C74BA52C97FB3DC0 /* SwiftTerm */,
 				14FC7C2CD0FC462FD42C5574 /* Supabase */,
 				2775BBEA2F8C3295008678FA /* Citadel */,
 			);
-			productName = "Kestrel";
+			productName = Kestrel;
 			productReference = D767937D3F0244AE97C1CF4B /* Kestrel.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -280,7 +313,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "KestrelOS" */;
+			buildConfigurationList = 279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "Kestrel MacOS" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -313,6 +346,17 @@
 				37168FCE381D5FEEBEE75632 /* Assets.xcassets in Resources */,
 				274397BB2FB3C0D500BC9E24 /* JetBrainsMono-Bold.ttf in Resources */,
 				274397BC2FB3C0D500BC9E24 /* JetBrainsMono-Regular.ttf in Resources */,
+				2797223A2FD0CF57001D14B2 /* Inter_18pt-Bold.ttf in Resources */,
+				2797223B2FD0CF57001D14B2 /* Inter_18pt-Medium.ttf in Resources */,
+				2797223C2FD0CF57001D14B2 /* SpaceMono-Regular.ttf in Resources */,
+				279722452FD0D042001D14B2 /* IBMPlexMono-Medium.ttf in Resources */,
+				279722462FD0D042001D14B2 /* IBMPlexMono-Regular.ttf in Resources */,
+				279722472FD0D042001D14B2 /* IBMPlexMono-Bold.ttf in Resources */,
+				2797223D2FD0CF57001D14B2 /* Outfit-Medium.ttf in Resources */,
+				2797223E2FD0CF57001D14B2 /* SpaceMono-Bold.ttf in Resources */,
+				2797223F2FD0CF57001D14B2 /* Inter_18pt-Regular.ttf in Resources */,
+				279722402FD0CF57001D14B2 /* Outfit-Bold.ttf in Resources */,
+				279722412FD0CF57001D14B2 /* Outfit-Regular.ttf in Resources */,
 				274397BD2FB3C0D500BC9E24 /* JetBrainsMono-Italic.ttf in Resources */,
 				274397BE2FB3C0D500BC9E24 /* JetBrainsMono-Medium.ttf in Resources */,
 			);
@@ -580,7 +624,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "KestrelOS" */ = {
+		279E392D2F88EBFD0016E4E5 /* Build configuration list for PBXProject "Kestrel MacOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E393B2F88EBFE0016E4E5 /* Debug */,
