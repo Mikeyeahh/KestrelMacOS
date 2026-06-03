@@ -19,6 +19,7 @@ struct KestrelMacApp: App {
     @StateObject private var deepLinkHandler = DeepLinkHandler.shared
     @StateObject private var notificationManager = KestrelNotificationManager.shared
     @AppStorage("app.theme") private var themeID = "Phosphor"
+    @AppStorage("app.font") private var fontID = "jetbrains-mono"
 
     init() {
         Purchases.logLevel = .error
@@ -28,10 +29,17 @@ struct KestrelMacApp: App {
     var body: some Scene {
         WindowGroup {
             MacContentView()
-                .id(themeID)
+                // Rebuild the whole UI when the theme OR font changes so both
+                // apply live (KestrelColors/KestrelFonts are re-evaluated).
+                .id(themeID + "|" + fontID)
                 .onChange(of: themeID) { _, newValue in
                     if let id = AppThemeID(rawValue: newValue) {
                         ThemeManager.shared.currentThemeID = id
+                    }
+                }
+                .onChange(of: fontID) { _, newValue in
+                    if let id = AppFontID(rawValue: newValue) {
+                        FontManager.shared.currentFontID = id
                     }
                 }
                 .environmentObject(revenueCatService)
