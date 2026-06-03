@@ -247,17 +247,17 @@ struct MacCloudSyncView: View {
 
                     // Plan badge
                     HStack(spacing: 6) {
-                        Text(revenueCatService.isProUser ? "KESTREL PRO" : "FREE")
+                        Text(revenueCatService.isProOrBundle ? "KESTREL PRO" : "FREE")
                             .font(KestrelFonts.mono(9))
                             .fontWeight(.bold)
                             .tracking(1.0)
                             .foregroundStyle(
-                                revenueCatService.isProUser ? KestrelColors.phosphorGreen : KestrelColors.textFaint
+                                revenueCatService.isProOrBundle ? KestrelColors.phosphorGreen : KestrelColors.textFaint
                             )
                             .padding(.horizontal, 8)
                             .padding(.vertical, 3)
                             .background(
-                                revenueCatService.isProUser ? KestrelColors.phosphorGreenDim : KestrelColors.backgroundCard
+                                revenueCatService.isProOrBundle ? KestrelColors.phosphorGreenDim : KestrelColors.backgroundCard
                             )
                             .clipShape(Capsule())
 

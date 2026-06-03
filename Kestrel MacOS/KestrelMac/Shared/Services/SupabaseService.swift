@@ -125,6 +125,7 @@ class SupabaseService: ObservableObject {
             // Auto-register this device and fetch the device list
             try? await registerDevice()
             try? await fetchDevices()
+            await refreshCloudProStatus()
         } catch {
             isAuthenticated = false
         }
@@ -139,6 +140,7 @@ class SupabaseService: ObservableObject {
         userId = session.user.id
         appendLog(action: "Signed in", detail: email)
         RevenueCatService.shared.checkDeveloperAccess(email: userEmail)
+        await refreshCloudProStatus()
 
         // Register this device and pull the device list
         try? await registerDevice()
@@ -158,6 +160,7 @@ class SupabaseService: ObservableObject {
             userId = session.user.id
             appendLog(action: "Signed up", detail: email)
             RevenueCatService.shared.checkDeveloperAccess(email: userEmail)
+            await refreshCloudProStatus()
             return false
         } else {
             appendLog(action: "Sign up — check email", detail: email)
@@ -192,10 +195,48 @@ class SupabaseService: ObservableObject {
             // Auto-register this device and fetch the device list
             try? await registerDevice()
             try? await fetchDevices()
-            
+            await refreshCloudProStatus()
+
             authSuccessMessage = "Email verified! You have been logged in."
         } catch {
             authSuccessMessage = "Failed to verify email. Please try again."
+        }
+    }
+
+    // MARK: - Pro Entitlement
+
+    private struct SubscriptionRow: Decodable { let status: String? }
+
+    /// Reads Pro from the `subscriptions` table (the service-role-written source
+    /// of truth, shared with the iOS/Windows apps) and pushes it into the
+    /// RevenueCat service so Pro bought on ANY platform — including RevenueCat
+    /// Web Billing, which the native SDK's `customerInfo` never reports — shows
+    /// in the UI. Best-effort: on any error we clear the cloud-Pro flag.
+    func refreshCloudProStatus() async {
+        // Link the RevenueCat SDK to this Supabase account so its customerInfo
+        // reflects purchases from any device, then read the authoritative
+        // subscriptions table (also covers Web Billing, which the SDK never sees).
+        if let userId {
+            await RevenueCatService.shared.identify(appUserID: userId.uuidString)
+        }
+        RevenueCatService.shared.cloudPro = await fetchProStatus()
+    }
+
+    /// True when the signed-in user has an active subscription row. RLS limits
+    /// the query to the caller's own row, so this returns at most one row.
+    func fetchProStatus() async -> Bool {
+        guard let userId else { return false }
+        do {
+            let rows: [SubscriptionRow] = try await client
+                .from("subscriptions")
+                .select("status")
+                .eq("user_id", value: userId.uuidString)
+                .limit(1)
+                .execute()
+                .value
+            return rows.first?.status == "active"
+        } catch {
+            return false
         }
     }
 

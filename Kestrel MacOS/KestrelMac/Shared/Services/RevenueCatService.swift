@@ -86,16 +86,23 @@ class RevenueCatService: ObservableObject {
     private static let proOverrideKey = "kestrel_pro_override"
 
     var isProOrBundle: Bool {
-        isProUser || hasSuiteBundle || proOverride || isDeveloper
+        isProUser || hasSuiteBundle || proOverride || isDeveloper || cloudPro
     }
 
     /// True when the signed-in user matches a developer email.
     @Published var isDeveloper: Bool = false
 
+    /// Pro entitlement read from the Supabase `subscriptions` table — the
+    /// service-role-written source of truth shared with the iOS and Windows
+    /// apps. This is how Pro bought on ANY platform shows here, including
+    /// RevenueCat Web Billing purchases that the native SDK's `customerInfo`
+    /// never reports. Set by `SupabaseService` after auth / on sign-out.
+    @Published var cloudPro: Bool = false
+
     var planName: String {
         if isDeveloper { return "Developer" }
         if hasSuiteBundle { return "Suite Bundle" }
-        if isProUser { return "Kestrel Pro" }
+        if isProUser || cloudPro { return "Kestrel Pro" }
         return "Free"
     }
 
@@ -125,6 +132,23 @@ class RevenueCatService: ObservableObject {
             let info = try await Purchases.shared.customerInfo()
             isProUser = info.entitlements["kestrel_pro"]?.isActive == true
             hasSuiteBundle = info.entitlements["suite_bundle"]?.isActive == true
+            if hasSuiteBundle { isProUser = true }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    /// Links the RevenueCat SDK to the Supabase user id (`app_user_id`) so its
+    /// `customerInfo` reflects this account's purchases across every device, and
+    /// so native purchases attribute to the right customer / `subscriptions`
+    /// row. Guarded on `isConfigured` so an early call during launch (before
+    /// `configure`) can't crash.
+    func identify(appUserID: String) async {
+        guard Purchases.isConfigured else { return }
+        do {
+            let result = try await Purchases.shared.logIn(appUserID)
+            isProUser = result.customerInfo.entitlements["kestrel_pro"]?.isActive == true
+            hasSuiteBundle = result.customerInfo.entitlements["suite_bundle"]?.isActive == true
             if hasSuiteBundle { isProUser = true }
         } catch {
             errorMessage = error.localizedDescription
@@ -223,6 +247,8 @@ class RevenueCatService: ObservableObject {
         isProUser = false
         hasSuiteBundle = false
         isDeveloper = false
+        cloudPro = false
+        if Purchases.isConfigured { _ = try? await Purchases.shared.logOut() }
         await checkEntitlements()
     }
 }
