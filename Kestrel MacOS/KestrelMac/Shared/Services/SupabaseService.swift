@@ -154,6 +154,17 @@ class SupabaseService: ObservableObject {
             password: password,
             redirectTo: URL(string: "kestrel://auth/callback")
         )
+        // Supabase doesn't error on a duplicate email (to avoid leaking which
+        // emails are registered); it returns a user with an EMPTY identities
+        // array and sends no email. Detect that and surface a clear error
+        // instead of the misleading "check your email" message.
+        if result.user.identities?.isEmpty == true {
+            throw NSError(
+                domain: "KestrelAuth", code: 409,
+                userInfo: [NSLocalizedDescriptionKey:
+                    "An account with this email already exists. Please sign in instead."]
+            )
+        }
         if let session = result.session {
             isAuthenticated = true
             userEmail = session.user.email
