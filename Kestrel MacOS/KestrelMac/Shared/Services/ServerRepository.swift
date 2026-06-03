@@ -77,10 +77,22 @@ class ServerRepository: ObservableObject {
 
     /// Resolve a server's group id. Prefers the canonical `groupId`; falls
     /// back to matching the legacy `group` *name* so pre-id data still groups.
+    ///
+    /// Returns `nil` (ungrouped) when the resolved group isn't actually
+    /// present — e.g. the group row hasn't synced yet, or membership is stale.
+    /// Without this guard such a server would be excluded from both its group
+    /// section AND the ungrouped section, vanishing from the sidebar entirely.
     func effectiveGroupId(_ server: Server) -> UUID? {
-        if let gid = server.groupId { return gid }
-        guard let name = server.group, !name.isEmpty else { return nil }
-        return groups.first(where: { $0.name == name })?.id
+        let raw: UUID?
+        if let gid = server.groupId {
+            raw = gid
+        } else if let name = server.group, !name.isEmpty {
+            raw = groups.first(where: { $0.name == name })?.id
+        } else {
+            raw = nil
+        }
+        guard let raw, groups.contains(where: { $0.id == raw }) else { return nil }
+        return raw
     }
 
     func servers(inGroup groupId: UUID) -> [Server] {
